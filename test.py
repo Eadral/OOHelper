@@ -17,7 +17,7 @@ def test(project_dir, ignores=None, main="Main"):
         if test_data_in.split("\\")[-1].split(".")[0] in ignores:
             continue
         test_data_out = test_data_in.split('.')[0] + ".out"
-        pat(test_data_in, test_data_out)
+        pat(test_data_in, test_data_out, main)
         pass_num += 1
 
     print("AC {}/{}".format(pass_num, len(test_data_in_paths)))

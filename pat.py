@@ -1,8 +1,8 @@
 import os
 
 
-def pat(input, output):
-    os.system('call run.cmd "{}"'.format(input))
+def pat(input, output, mainClass):
+    os.system('call run.cmd "{}" {}'.format(input, mainClass))
 
     test_output_path = os.path.join("temp", "output.txt")
     compare(output, test_output_path)

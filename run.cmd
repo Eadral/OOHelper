@@ -1,3 +1,3 @@
 cd temp
-java Main < %1 > output.txt
+java %2 < %1 > output.txt
 cd ..

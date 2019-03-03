@@ -1,5 +1,5 @@
 .idea/
 __pycache__/
-temp/
 manual_gen/
 venv/
+*.class
