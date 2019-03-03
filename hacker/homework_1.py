@@ -11,17 +11,17 @@ len_coeff = 100
 def hack(project_dir, main="Main"):
     precompile(project_dir, main)
     while True:
-        corr, expr, subj = auto_test()
+        corr, expr, subj = auto_test(main)
         if corr:
             print("Pass: {}, {}".format(expr, subj))
         else:
             raise RuntimeError("Err: {}, {}".format(expr, subj))
 
 
-def auto_test():
+def auto_test(mainClass):
     expr = gen(n_term)
     open("temp\\input.txt", "w").writelines(expr)
-    os.system('call run.cmd "{}"'.format("input.txt"))
+    os.system('call run.cmd "{}" "{}"'.format("input.txt", mainClass))
     subj = split(open("temp\\output.txt").readlines()[0])
     return test(expr, subj), expr, subj
 
