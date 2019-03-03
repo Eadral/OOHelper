@@ -3,9 +3,9 @@ import random
 import subprocess
 import os
 
-n_term = 2000
-range_expo = 100
-len_coeff = 100
+n_term = 1
+range_expo = 3
+len_coeff = 1
 
 
 def hack(project_dir, main="Main"):
@@ -37,7 +37,7 @@ def gen_term():
 
 
 def gen(n=10):
-    expr = gen_term()[2:]
+    expr = gen_term()
     for i in range(n):
         expr += gen_term()
     return expr
@@ -55,4 +55,4 @@ def test(expr, subject):
 if __name__ == "__main__":
     # print(gen_term())
     # print(split("7488*x^-97+1302*x^-94-4320*x^-81+6144*x^-65-3416*x^-62+48*x^7-75*x^14+864*x^15+960*x^39+4420*x^64+952*x^67"))
-    hack(r"C:\Study\OO\homework\homework_1")
+    hack(r"C:\Study\OO\homework\oo_course_2019_16191051_homework_1", "Main")

@@ -37,7 +37,7 @@ def compare(target_path, subject_path):
 def equal(target, subject):
     if target == subject:
         return True
-    if eval("{} == {}".format(target, subject)) is True:
+    if eval("{} == {}".format(target.replace("^", "**"), subject.replace("^", "**"))) is True:
         sys.stderr.write("Warning: Equal but different!! \n{}\n {}".format(target, subject))
         return True
     return False
