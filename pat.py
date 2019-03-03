@@ -38,6 +38,6 @@ def equal(target, subject):
     if target == subject:
         return True
     if eval("{} == {}".format(target, subject)) is True:
-        sys.stderr.write("Equal but different!! \n{}\n {}".format(target, subject))
+        sys.stderr.write("Warning: Equal but different!! \n{}\n {}".format(target, subject))
         return True
     return False
