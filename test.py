@@ -24,4 +24,4 @@ def test(project_dir, ignores=None, main="Main"):
 
 
 if __name__ == "__main__":
-    test(r"C:\Study\OO\homework\homework_1", [])
+    test(r"C:\Study\OO\homework\oo_course_2019_16191051_homework_1", [])

@@ -1,5 +1,7 @@
 import os
+from sympy import Symbol
 
+x = Symbol("x")
 
 def pat(input, output, mainClass):
     os.system('call run.cmd "{}" {}'.format(input, mainClass))
@@ -19,7 +21,7 @@ def compare(target_path, subject_path):
         del subject[-1]
     n_lines = min(len(target), len(subject))
     for i in range(n_lines):
-        if target[i].rstrip() != subject[i].rstrip():
+        if not equal(target[i].rstrip(), subject[i].rstrip()):
             raise RuntimeError("WA in {} \n\t Line {} : except {} while found {}"
                                .format(target_path, i, target[i], subject[i]))
     if len(target) > len(subject):
@@ -28,3 +30,8 @@ def compare(target_path, subject_path):
     if len(target) < len(subject):
         raise RuntimeError(
             "WA in {} \n\t EOF: except NOTHING while found {}".format(target_path, subject[len(target) + 1]))
+
+def equal(target, subject):
+
+    return target == subject or eval("{} == {}".format(target, subject))
+
