@@ -3,7 +3,7 @@ from pat import pat
 from utils import precompile
 
 
-def test(project_dir, ignores=None, main="Main"):
+def test(project_dir, ignores=None, main="Main", package=""):
     if ignores is None:
         ignores = []
 
@@ -17,11 +17,12 @@ def test(project_dir, ignores=None, main="Main"):
         if test_data_in.split("\\")[-1].split(".")[0] in ignores:
             continue
         test_data_out = test_data_in.split('.')[0] + ".out"
-        pat(test_data_in, test_data_out, main)
+        pat(test_data_in, test_data_out, main, package)
         pass_num += 1
 
     print("AC {}/{}".format(pass_num, len(test_data_in_paths)))
 
 
 if __name__ == "__main__":
+    # test(r"C:\Study\OO\others\homework_1\hjw", ignores=[], main="WorkBegin", package="work.")
     test(r"C:\Study\OO\homework\oo_course_2019_16191051_homework_1", [], "Main")

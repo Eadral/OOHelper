@@ -5,8 +5,8 @@ import sys
 x = Symbol("x")
 
 
-def pat(input, output, mainClass):
-    os.system('call run.cmd "{}" {}'.format(input, mainClass))
+def pat(input, output, mainClass, package):
+    os.system('call run.cmd "{}" {}{}'.format(input, package, mainClass))
 
     test_output_path = os.path.join("temp", "output.txt")
     compare(output, test_output_path)

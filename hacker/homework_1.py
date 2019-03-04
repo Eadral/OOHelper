@@ -3,25 +3,25 @@ import random
 import subprocess
 import os
 
-n_term = 1
+n_term = 100
 range_expo = 3
 len_coeff = 1
 
 
-def hack(project_dir, main="Main"):
+def hack(project_dir, main="Main", package=""):
     precompile(project_dir, main)
     while True:
-        corr, expr, subj = auto_test(main)
+        corr, expr, subj = auto_test(main, package)
         if corr:
             print("Pass: {}, {}".format(expr, subj))
         else:
             raise RuntimeError("Err: {}, {}".format(expr, subj))
 
 
-def auto_test(mainClass):
-    expr = gen(n_term)
+def auto_test(mainClass, package):
+    expr = gen(random.randint(0, n_term))
     open("temp\\input.txt", "w").writelines(expr)
-    os.system('call run.cmd "{}" "{}"'.format("input.txt", mainClass))
+    os.system('call run.cmd "{}" {}{}'.format("input.txt", package, mainClass))
     subj = split(open("temp\\output.txt").readlines()[0])
     return test(expr, subj), expr, subj
 
@@ -55,4 +55,5 @@ def test(expr, subject):
 if __name__ == "__main__":
     # print(gen_term())
     # print(split("7488*x^-97+1302*x^-94-4320*x^-81+6144*x^-65-3416*x^-62+48*x^7-75*x^14+864*x^15+960*x^39+4420*x^64+952*x^67"))
-    hack(r"C:\Study\OO\homework\oo_course_2019_16191051_homework_1", "Main")
+    hack(r"C:\Study\OO\homework\oo_course_2019_16191051_homework_1", "Main", "")
+    # hack(r"C:\Study\OO\others\homework_1\hjw", main="WorkBegin", package="work.")
