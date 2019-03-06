@@ -39,7 +39,7 @@ def precompile(project_dir, main):
 
 
 def compile_source(src):
-    cmd = 'javac {} -d {}'.format(src, "temp\\")
+    cmd = 'javac -encoding UTF-8 {} -d {}'.format(src, "temp\\")
     print(cmd)
     os.system(cmd)
 

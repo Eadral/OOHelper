@@ -3,7 +3,7 @@ import random
 import subprocess
 import os
 
-n_term = 100
+n_term = 1000
 range_expo = 3
 len_coeff = 1
 
@@ -55,5 +55,8 @@ def test(expr, subject):
 if __name__ == "__main__":
     # print(gen_term())
     # print(split("7488*x^-97+1302*x^-94-4320*x^-81+6144*x^-65-3416*x^-62+48*x^7-75*x^14+864*x^15+960*x^39+4420*x^64+952*x^67"))
-    hack(r"C:\Study\OO\homework\oo_course_2019_16191051_homework_1", "Main", "")
+    # hack(r"C:\Study\OO\homework\oo_course_2019_16191051_homework_1", "Main", "")
+    # hack(r"C:\Study\OO\others\homework_1\ly", "Executive", "math.qiudao.")
     # hack(r"C:\Study\OO\others\homework_1\hjw", main="WorkBegin", package="work.")
+    test(r"C:\Study\OO\others\homework_1\Saber", "Main")
+
