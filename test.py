@@ -3,13 +3,13 @@ from pat import pat
 from utils import precompile
 
 
-def test(project_dir, ignores=None, main="Main", package=""):
+def test(test_data_folder, project_dir, ignores=None, main="Main", package=""):
     if ignores is None:
         ignores = []
 
     precompile(project_dir, main)
 
-    test_data_folder = os.path.join(project_dir, "test_data")
+    # test_data_folder = os.path.join(project_dir, "test_data")
     test_data_paths = get_paths_recursively(test_data_folder)
     test_data_in_paths = list(filter(lambda path: path.split('.')[-1] == "in", test_data_paths))
     pass_num = 0
@@ -24,7 +24,7 @@ def test(project_dir, ignores=None, main="Main", package=""):
 
 
 if __name__ == "__main__":
-    test(r"C:\Study\OO\others\homework_1\ly", [], "Executive", "math.qiudao.")
+    # test(r"C:\Study\OO\others\homework_1\ly", [], "Executive", "math.qiudao.")
     # test(r"C:\Study\OO\others\homework_1\hjw", ignores=[], main="WorkBegin", package="work.")
     # test(r"C:\Study\OO\homework\oo_course_2019_16191051_homework_1", [], "Main")
 
@@ -34,6 +34,6 @@ if __name__ == "__main__":
     # test(r"C:\Study\OO\others\homework_1\Rider", [], "Main")
     # test(r"C:\Study\OO\others\homework_1\Caster", [], "Main")
     # test(r"C:\Study\OO\others\homework_1\Assassin", [], "Solution")
-    test(r"C:\Study\OO\others\homework_1\Alterego", ["sign_first"], "PolyBuild")
+    test(r"C:\Study\OO\homework\oo_course_2019_16191051_homework_1\test_data", r"C:\Study\OO\others\homework_1\Alterego", ["sign_first"], "PolyBuild")
 
 
