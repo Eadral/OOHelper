@@ -3,12 +3,12 @@ import random
 import subprocess
 import os
 
-n_term = 1000
+n_term = 300
 range_expo = 3
 len_coeff = 1
 
 
-def hack(project_dir, main="Main", package=""):
+def hack(project_dir, none=None, main="Main", package=""):
     precompile(project_dir, main)
     while True:
         corr, expr, subj = auto_test(main, package)
@@ -43,9 +43,6 @@ def gen(n=10):
     return expr
 
 
-
-
-
 def test(expr, subject):
     open("test.wl", "w").writelines("Print[Dt[{}, x] == {}]".format(expr, subject))
     os.system("wolframscript -file test.wl > test_out.txt")
@@ -58,5 +55,11 @@ if __name__ == "__main__":
     # hack(r"C:\Study\OO\homework\oo_course_2019_16191051_homework_1", "Main", "")
     # hack(r"C:\Study\OO\others\homework_1\ly", "Executive", "math.qiudao.")
     # hack(r"C:\Study\OO\others\homework_1\hjw", main="WorkBegin", package="work.")
-    test(r"C:\Study\OO\others\homework_1\Saber", "Main")
 
+    # hack(r"C:\Study\OO\others\homework_1\Saber", [], "Main")
+    # hack(r"C:\Study\OO\others\homework_1\Lancer", ["long_expo", "stack_overflow"], "Main")  # unhack
+    # hack(r"C:\Study\OO\others\homework_1\Archer", ["special_space"], "PolyCal")
+    # hack(r"C:\Study\OO\others\homework_1\Rider", [], "Main")
+    # hack(r"C:\Study\OO\others\homework_1\Caster", ["auto_0"], "Main") # checked
+    # hack(r"C:\Study\OO\others\homework_1\Assassin", [], "Solution")
+    hack(r"C:\Study\OO\others\homework_1\Alterego", ["sign_first"], "PolyBuild")

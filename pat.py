@@ -1,5 +1,5 @@
 import os
-from sympy import Symbol
+from sympy import Symbol, sin, cos
 import sys
 
 x = Symbol("x")
@@ -37,7 +37,11 @@ def compare(target_path, subject_path):
 def equal(target, subject):
     if target == subject:
         return True
-    if eval("{} == {}".format(target.replace("^", "**"), subject.replace("^", "**"))) is True:
-        sys.stderr.write("Warning: Equal but different!! \n{}\n {}".format(target, subject))
-        return True
+    try:
+        if eval("{} == {}".format(target.replace("^", "**"), subject.replace("^", "**"))) is True:
+            if len(subject) > len(target):
+                sys.stderr.write("Warning: Equal but longer!! \n{}\n {}".format(target, subject))
+            return True
+    except:
+        return False
     return False

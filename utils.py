@@ -34,14 +34,18 @@ def precompile(project_dir, main):
     output_path = os.path.join("temp", "output.txt")
     if os.path.exists(output_path):
         os.remove(output_path)
-    src_path = os.path.join(project_dir, "src", "*.java")
+    src_path = os.path.join(project_dir, "src")
     compile_source(src_path)
 
 
 def compile_source(src):
-    cmd = 'javac -encoding UTF-8 {} -d {}'.format(src, "temp\\")
+    # src_path = os.path.join(project_dir, "src", "*.java")
+    here = os.getcwd()
+    os.chdir(src)
+    cmd = 'javac -encoding UTF-8 *.java -d {}'.format(os.path.join(here, "temp"))
     print(cmd)
     os.system(cmd)
+    os.chdir(here)
 
 
 def split(expr):

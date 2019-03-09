@@ -24,16 +24,15 @@ def test(test_data_folder, project_dir, ignores=None, main="Main", package=""):
 
 
 if __name__ == "__main__":
-    # test(r"C:\Study\OO\others\homework_1\ly", [], "Executive", "math.qiudao.")
-    # test(r"C:\Study\OO\others\homework_1\hjw", ignores=[], main="WorkBegin", package="work.")
-    # test(r"C:\Study\OO\homework\oo_course_2019_16191051_homework_1", [], "Main")
+    test_data = r"C:\Study\OO\homework\test_data\test_data_homework_2"
 
-    # test(r"C:\Study\OO\others\homework_1\Saber", [], "Main")
-    # test(r"C:\Study\OO\others\homework_1\Lancer", ["long_expo", "stack_overflow"], "Main")
-    # test(r"C:\Study\OO\others\homework_1\Archer", ["special_space"], "PolyCal")
-    # test(r"C:\Study\OO\others\homework_1\Rider", [], "Main")
-    # test(r"C:\Study\OO\others\homework_1\Caster", [], "Main")
-    # test(r"C:\Study\OO\others\homework_1\Assassin", [], "Solution")
-    test(r"C:\Study\OO\homework\oo_course_2019_16191051_homework_1\test_data", r"C:\Study\OO\others\homework_1\Alterego", ["sign_first"], "PolyBuild")
+    test(test_data, r"C:\Study\OO\homework\oo_course_2019_16191051_homework_2", [], "Main", "")
 
+    # test(test_data, r"C:\Study\OO\others\homework_1\Saber", [], "Main")
+    # test(test_data, r"C:\Study\OO\others\homework_1\Lancer", ["long_expo", "stack_overflow"], "Main")
+    # test(test_data, r"C:\Study\OO\others\homework_1\Archer", ["special_space", "special_space_1"], "PolyCal")
+    # test(test_data, r"C:\Study\OO\others\homework_1\Rider", [], "Main")
+    # test(test_data, r"C:\Study\OO\others\homework_1\Caster", ["auto_0"], "Main")
+    # test(test_data, r"C:\Study\OO\others\homework_1\Assassin", [], "Solution")
+    # test(test_data, r"C:\Study\OO\others\homework_1\Alterego", ["sign_first"], "PolyBuild")
 
