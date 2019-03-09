@@ -1,0 +1,1 @@
+30*x*sin(x)^4*cos(x) + 95*x*cos(x)^5 - 85*x*cos(x)^3 + 24*x + 50*sin(x)^5 - 70*sin(x)^3 + 20*sin(x)
