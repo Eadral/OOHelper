@@ -1,5 +1,5 @@
 import os
-from sympy import Symbol, sin, cos
+from sympy import Symbol, sin, cos, simplify
 import sys
 
 x = Symbol("x")
@@ -38,7 +38,7 @@ def equal(target, subject):
     if target == subject:
         return True
     try:
-        if eval("{} == {}".format(target.replace("^", "**"), subject.replace("^", "**"))) is True:
+        if eval("simplify({}) == simplify({})".format(target.replace("^", "**"), subject.replace("^", "**"))) is True:
             if len(subject) > len(target):
                 sys.stderr.write("Warning: Equal but longer!! \n{}\n {}".format(target, subject))
             return True
