@@ -57,6 +57,8 @@ def split(expr):
 
 
 def equal(target, subject, check_length=True):
+    target = target.rstrip()
+    subject = subject.rstrip()
     if target == subject:
         return True
     try:
@@ -68,7 +70,6 @@ def equal(target, subject, check_length=True):
     except:
         return False
     return False
-
 
 if __name__ == "__main__":
     print(split("4*x^-2-16*x^-5-3*x^-4-20*x^-6-6-10*x+39*x^2+24*x^3-30*x^4"))

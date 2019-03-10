@@ -4,6 +4,7 @@ import subprocess
 import os
 from sympy import Symbol, sin, cos, diff
 import progressbar
+
 x = Symbol("x")
 
 n_term = 10
@@ -26,14 +27,19 @@ def hack(project_dir, none=None, main="Main", package=""):
 
 
 def auto_test(mainClass, package):
-    expr = gen(random.randint(1, n_term))
+    positive = True
+    if random.random() < 0.5:
+        expr = gen_positive(random.randint(1, n_term))
+    else:
+        expr = gen_negative(random.randint(1, n_term))
+        positive = False
     open("temp\\input.txt", "w").writelines(expr)
     os.system('call run.cmd "{}" {}{}'.format("input.txt", package, mainClass))
     subj = open("temp\\output.txt").readlines()[0]
-    return test(expr, subj), expr, subj
+    return test(expr, subj, positive), expr, subj
 
 
-def gen_term(n=n_factor):
+def gen_term_positive(n=n_factor):
     term = ""
     if n >= 2 and random.random() < 0.4:
         term += "{}".format(random.choice(["-", "+"]))
@@ -50,21 +56,64 @@ def gen_term(n=n_factor):
     return term
 
 
-
-def gen(n=n_term):
+def gen_positive(n=n_term):
     expr = ""
     for i in range(n):
         expr += "{}{}".format(
             random.choice(["-", "+"]),
-            gen_term(random.randrange(1, n_factor))
+            gen_term_positive(random.randrange(1, n_factor))
         )
     return expr
 
 
-def test(expr, subject):
-    expr = expr.replace("^", "**")
-    target = diff(eval(expr), x)
-    target = str(target).replace("**", "^")
+global n_defect
+
+def try_defect(defect, normal):
+    global n_defect
+    if n_defect == 0:
+        return normal
+    if random.random() < 0.1:
+        n_defect -= 1
+        return defect
+
+def gen_negative(n=n_term):
+    global n_defect
+    n_defect = 1
+    expr = ""
+    for i in range(n):
+        expr += "{}{}".format(
+            random.choice(["-", "+"]),
+            gen_term_negative(random.randrange(1, n_factor))
+        )
+    if n_defect > 0:
+        expr += random.choice(["@", "\f", "\v"])
+    return expr
+
+def gen_term_negative(n=n_factor):
+    global n_defect
+    term = ""
+    if n >= 2 and random.random() < 0.4:
+        term += "{}".format(random.choice(["-", "+"]))
+        n -= 1
+    terms = []
+    for i in range(n):
+        terms.append("{}".format(random.choice([
+            "x^{}".format(random_range(range_expo)),
+            "sin(x)^{}".format(random_range(range_expo)),
+            "cos(x)^{}".format(random_range(range_expo)),
+            "{}".format(random_range(range_coeff)),
+        ])))
+    term += "*".join(terms)
+    return term
+
+
+def test(expr, subject, positive=True):
+    if positive:
+        expr = expr.replace("^", "**")
+        target = diff(eval(expr), x)
+        target = str(target).replace("**", "^")
+    else:
+        target = "WRONG FORMAT!"
     return equal(target, subject, check_length=False)
 
 
@@ -75,7 +124,6 @@ if __name__ == "__main__":
     # hack(r"C:\Study\OO\others\homework_1\ly", "Executive", "math.qiudao.")
     # hack(r"C:\Study\OO\others\homework_1\hjw", main="WorkBegin", package="work.")
     hack(r"C:\Study\OO\homework\oo_course_2019_16191051_homework_2", [], "Main", "")
-
 
     # hack(r"C:\Study\OO\others\homework_1\Saber", [], "Main")
     # hack(r"C:\Study\OO\others\homework_1\Lancer", ["long_expo", "stack_overflow"], "Main")  # unhack
