@@ -63,7 +63,7 @@ def equal(name, target, subject, check_length=True):
         return True
     try:
         target = target.replace(" ", "")
-        if eval("simplify({}) == simplify({})".format(target.replace("^", "**"), subject.replace("^", "**"))) is True:
+        if eval(subject.replace("^", "**")) == eval(target.replace("^", "**")):
             if check_length and len(subject) > len(target):
                 sys.stderr.write("\nWarning: Equal but longer!! {} \n\t{}\n\t{}\n".format(name, target, subject))
             return True
