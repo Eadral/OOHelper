@@ -56,7 +56,7 @@ def split(expr):
     return "".join(list(map(lambda x: " {} ".format(x) if x in ["*", "x", "^", "+", "-"] else x, expr)))
 
 
-def equal(target, subject, check_length=True):
+def equal(name, target, subject, check_length=True):
     target = target.rstrip()
     subject = subject.rstrip()
     if target == subject:
@@ -65,7 +65,7 @@ def equal(target, subject, check_length=True):
         target = target.replace(" ", "")
         if eval("simplify({}) == simplify({})".format(target.replace("^", "**"), subject.replace("^", "**"))) is True:
             if check_length and len(subject) > len(target):
-                sys.stderr.write("\nWarning: Equal but longer!! \n\t{}\n\t{}\n".format(target, subject))
+                sys.stderr.write("\nWarning: Equal but longer!! {} \n\t{}\n\t{}\n".format(name, target, subject))
             return True
     except:
         return False

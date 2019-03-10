@@ -36,7 +36,7 @@ def auto_test(mainClass, package):
     open("temp\\input.txt", "w").writelines(expr)
     os.system('call run.cmd "{}" {}{}'.format("input.txt", package, mainClass))
     subj = open("temp\\output.txt").readlines()[0]
-    return test(expr, subj, positive), expr, subj
+    return test("temp\\input.txt", expr, subj, positive), expr, subj
 
 
 def gen_term_positive(n=n_factor):
@@ -107,18 +107,18 @@ def gen_term_negative(n=n_factor):
     return term
 
 
-def test(expr, subject, positive=True):
+def test(name, expr, subject, positive=True):
     if positive:
         expr = expr.replace("^", "**")
         target = diff(eval(expr), x)
         target = str(target).replace("**", "^")
     else:
         target = "WRONG FORMAT!"
-    return equal(target, subject, check_length=False)
+    return equal(name, target, subject, check_length=False)
 
 
 if __name__ == "__main__":
-    # print(gen_term())
+    print(gen_positive())
     # print(split("7488*x^-97+1302*x^-94-4320*x^-81+6144*x^-65-3416*x^-62+48*x^7-75*x^14+864*x^15+960*x^39+4420*x^64+952*x^67"))
     # hack(r"C:\Study\OO\homework\oo_course_2019_16191051_homework_1", "Main", "")
     # hack(r"C:\Study\OO\others\homework_1\ly", "Executive", "math.qiudao.")
