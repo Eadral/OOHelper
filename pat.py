@@ -1,6 +1,7 @@
 import os
 from sympy import Symbol, sin, cos, simplify
 import sys
+from utils import *
 
 x = Symbol("x")
 
@@ -34,14 +35,3 @@ def compare(target_path, subject_path):
             "WA in {} \n\t EOF: except NOTHING while found {}".format(target_path, subject[len(target) + 1]))
 
 
-def equal(target, subject):
-    if target == subject:
-        return True
-    try:
-        if eval("simplify({}) == simplify({})".format(target.replace("^", "**"), subject.replace("^", "**"))) is True:
-            if len(subject) > len(target):
-                sys.stderr.write("Warning: Equal but longer!! \n{}\n {}".format(target, subject))
-            return True
-    except:
-        return False
-    return False

@@ -3,3 +3,4 @@ __pycache__/
 manual_gen/
 venv/
 *.class
+/*.txt
