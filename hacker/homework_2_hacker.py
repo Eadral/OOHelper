@@ -3,48 +3,60 @@ import random
 import subprocess
 import os
 from sympy import Symbol, sin, cos, diff
-
+import progressbar
 x = Symbol("x")
 
 n_term = 10
 n_factor = 10
-range_expo = 3
-len_coeff = 1
+range_expo = 5
+range_coeff = 10
 
 
 def hack(project_dir, none=None, main="Main", package=""):
     precompile(project_dir, main)
-    print("Testing... Please wait.")
+    # print("Testing... Please wait.")
+    bar = progressbar.ProgressBar(max_value=progressbar.UnknownLength)
+    i = 0
     while True:
         corr, expr, subj = auto_test(main, package)
         if not corr:
             raise RuntimeError("Err: {}\n {}".format(expr.replace(" ", ""), subj))
+        bar.update(i)
+        i += 1
 
 
 def auto_test(mainClass, package):
-    expr = gen(random.randint(0, n_term))
+    expr = gen(random.randint(1, n_term))
     open("temp\\input.txt", "w").writelines(expr)
     os.system('call run.cmd "{}" {}{}'.format("input.txt", package, mainClass))
     subj = open("temp\\output.txt").readlines()[0]
     return test(expr, subj), expr, subj
 
 
-def gen_term():
-    if random.random() < 0.2:
-        return " {} {} ".format(random.choice(["-", "+"]), random_bigint(len_coeff))
-    else:
-        return " {} {} x {} ".format(random.choice(["-", "+"]),
-                                     random.choice([" {} * ".format(random_bigint(len_coeff)), "+", "-", " "]),
-                                     random.choice([" ^ {} ".format(random.randint(-range_expo, range_expo)), " "]),
-                                     )
+def gen_term(n=n_factor):
+    term = ""
+    if n >= 2 and random.random() < 0.4:
+        term += "{}".format(random.choice(["-", "+"]))
+        n -= 1
+    terms = []
+    for i in range(n):
+        terms.append("{}".format(random.choice([
+            "x^{}".format(random_range(range_expo)),
+            "sin(x)^{}".format(random_range(range_expo)),
+            "cos(x)^{}".format(random_range(range_expo)),
+            "{}".format(random_range(range_coeff)),
+        ])))
+    term += "*".join(terms)
+    return term
 
 
-def gen(n=10):
+
+def gen(n=n_term):
     expr = ""
     for i in range(n):
         expr += "{}{}".format(
             random.choice(["-", "+"]),
-            gen_term()
+            gen_term(random.randrange(1, n_factor))
         )
     return expr
 
@@ -53,7 +65,7 @@ def test(expr, subject):
     expr = expr.replace("^", "**")
     target = diff(eval(expr), x)
     target = str(target).replace("**", "^")
-    return equal(target, subject)
+    return equal(target, subject, check_length=False)
 
 
 if __name__ == "__main__":

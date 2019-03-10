@@ -8,7 +8,7 @@ def test(test_data_folder, project_dir, ignores=None, main="Main", package=""):
         ignores = []
 
     precompile(project_dir, main)
-    print("Testing... Please wait.")
+    # print("Testing... Please wait.")
     # test_data_folder = os.path.join(project_dir, "test_data")
     test_data_paths = get_paths_recursively(test_data_folder)
     test_data_in_paths = list(filter(lambda path: path.split('.')[-1] == "in", test_data_paths))

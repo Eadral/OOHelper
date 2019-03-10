@@ -19,6 +19,8 @@ def get_paths_recursively(folder):
 def random_bigint(len=100):
     return random.randint(-10 ** len + 1, 10 ** len - 1)
 
+def random_range(range=10):
+    return random.randint(-range, range)
 
 def random_int():
     return random.randint(-2 ** 32, 2 ** 32 - 1)
@@ -54,13 +56,13 @@ def split(expr):
     return "".join(list(map(lambda x: " {} ".format(x) if x in ["*", "x", "^", "+", "-"] else x, expr)))
 
 
-def equal(target, subject):
+def equal(target, subject, check_length=True):
     if target == subject:
         return True
     try:
         target = target.replace(" ", "")
         if eval("simplify({}) == simplify({})".format(target.replace("^", "**"), subject.replace("^", "**"))) is True:
-            if len(subject) > len(target):
+            if check_length and len(subject) > len(target):
                 sys.stderr.write("\nWarning: Equal but longer!! \n\t{}\n\t{}\n".format(target, subject))
             return True
     except:
