@@ -3,6 +3,7 @@ from pat import pat
 from utils import precompile
 import progressbar
 
+
 def test(test_data_folder, project_dir, ignores=None, main="Main", package=""):
     if ignores is None:
         ignores = []
@@ -37,4 +38,3 @@ if __name__ == "__main__":
     # test(test_data, r"C:\Study\OO\others\homework_1\Caster", ["auto_0"], "Main")
     # test(test_data, r"C:\Study\OO\others\homework_1\Assassin", [], "Solution")
     # test(test_data, r"C:\Study\OO\others\homework_1\Alterego", ["sign_first"], "PolyBuild")
-
