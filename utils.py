@@ -1,6 +1,8 @@
 import os
 import random
-
+from sympy import Symbol, sin, cos, simplify
+import sys
+x = Symbol("x")
 
 def get_paths_recursively(folder):
     paths = []
@@ -50,6 +52,20 @@ def compile_source(src):
 
 def split(expr):
     return "".join(list(map(lambda x: " {} ".format(x) if x in ["*", "x", "^", "+", "-"] else x, expr)))
+
+
+def equal(target, subject):
+    if target == subject:
+        return True
+    try:
+        target = target.replace(" ", "")
+        if eval("simplify({}) == simplify({})".format(target.replace("^", "**"), subject.replace("^", "**"))) is True:
+            if len(subject) > len(target):
+                sys.stderr.write("\nWarning: Equal but longer!! \n\t{}\n\t{}\n".format(target, subject))
+            return True
+    except:
+        return False
+    return False
 
 
 if __name__ == "__main__":

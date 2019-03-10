@@ -1,3 +1,4 @@
-cd temp
-java Main < %1 > output.txt
-cd ..
+@echo off
+@cd temp
+@java Main < %1 > output.txt
+@cd ..
