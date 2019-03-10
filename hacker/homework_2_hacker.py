@@ -5,6 +5,8 @@ import os
 from sympy import Symbol, sin, cos, diff
 import progressbar
 
+os.chdir("..")
+
 x = Symbol("x")
 
 n_term = 10
