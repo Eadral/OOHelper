@@ -2,13 +2,19 @@ import os
 from sympy import Symbol, sin, cos, simplify
 import sys
 from utils import *
+from time import time
 
 x = Symbol("x")
 
 
 def pat(input, output, mainClass, package):
+    start = time()
     os.system('call run.cmd "{}" {}{}'.format(input, package, mainClass))
-
+    end = time()
+    duration = end - start
+    # print(duration)
+    if duration > 1.0:
+        sys.stderr.write("\nWarning: TLE {} at {}\n".format(duration, input))
     test_output_path = os.path.join("temp", "output.txt")
     compare(output, test_output_path)
 

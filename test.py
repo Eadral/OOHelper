@@ -27,9 +27,9 @@ def test(test_data_folder, project_dir, ignores=None, main="Main", package=""):
 
 
 if __name__ == "__main__":
-    test_data = r"E:\OO面向对象\OOHelper\test_data\test_data_homework_2"
+    test_data = r"C:\Study\OO\homework\test_data\test_data_homework_2"
 
-    test(test_data, r"C:\Users\Wazak\Desktop\java\homework_2", ["stack_overflow"], "Main", "")
+    test(test_data, r"C:\Study\OO\homework\oo_course_2019_16191051_homework_2", [], "Main", "")
 
     # test(test_data, r"C:\Study\OO\others\homework_1\Saber", [], "Main")
     # test(test_data, r"C:\Study\OO\others\homework_1\Lancer", ["long_expo", "stack_overflow"], "Main")

@@ -11,8 +11,8 @@ x = Symbol("x")
 
 n_term = 10
 n_factor = 10
-range_expo = 5
-range_coeff = 10
+range_expo = 20
+range_coeff = 300
 
 
 def hack(project_dir, none=None, main="Main", package=""):
