@@ -31,7 +31,7 @@ def random_space():
 
 
 
-def precompile(project_dir, main):
+def precompile(project_dir, main, main_path):
     class_path = os.path.join("temp", "{}.class".format(main))
     if os.path.exists(class_path):
         os.remove(class_path)
@@ -39,14 +39,14 @@ def precompile(project_dir, main):
     if os.path.exists(output_path):
         os.remove(output_path)
     src_path = os.path.join(project_dir, "src")
-    compile_source(src_path)
+    compile_source(src_path, main_path)
 
 
-def compile_source(src):
+def compile_source(src, main_path="."):
     # src_path = os.path.join(project_dir, "src", "*.java")
     here = os.getcwd()
     os.chdir(src)
-    cmd = 'javac -encoding UTF-8 *.java -d {}'.format(os.path.join(here, "temp"))
+    cmd = 'javac -encoding UTF-8 {} -d {}'.format(os.path.join(main_path, "*.java"), os.path.join(here, "temp"))
     print(cmd)
     os.system(cmd)
     os.chdir(here)
