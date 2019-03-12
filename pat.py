@@ -12,7 +12,7 @@ def pat(input, output, mainClass, package):
     os.system('call run.cmd "{}" {}{}'.format(input, package, mainClass))
     end = time()
     duration = end - start
-    # print(duration)
+    # print(duration, input)
     if duration > 1.0:
         sys.stderr.write("\nWarning: TLE {} at {}\n".format(duration, input))
     test_output_path = os.path.join("temp", "output.txt")
