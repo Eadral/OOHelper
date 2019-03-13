@@ -26,20 +26,4 @@ def test(test_data_folder, project_dir, ignores=None, main="Main", package="", m
     # print("AC {}/{}".format(pass_num, len(test_data_in_paths)))
 
 
-if __name__ == "__main__":
-    test_data = r"C:\Study\OO\homework\test_data\test_data_homework_2"
-
-    # for i in range(500):
-    # test(test_data, r"C:\Study\OO\homework\oo_course_2019_16191051_homework_2", [], "Main", "")
-
-    test(test_data, r"C:\Study\OO\others\homework_2\Saber", [], "Main", "")
-    # test(test_data, r"C:\Study\OO\others\homework_2\Lancer", [], "PolynomialCal", "")
-    # test(test_data, r"C:\Study\OO\others\homework_2\Archer", [], "Expression", "")
-    # test(test_data, r"C:\Study\OO\others\homework_2\Caster", [], "Polynomial", "")
-    # test(test_data, r"C:\Study\OO\others\homework_2\Assassin", [], "Main", "homework.", "homework")  # huahua?
-    # test(test_data, r"C:\Study\OO\others\homework_2\Berserker", [], "Main", "", "")
-    # test(test_data, r"C:\Study\OO\others\homework_2\Alterego", [], "Main", "", "")
-
-
-
 
