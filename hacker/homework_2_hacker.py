@@ -14,18 +14,17 @@ n_factor = 10
 range_expo = 20
 range_coeff = 300
 
+TIMES = 1000
 
 def hack(project_dir, none=None, main="Main", package="", main_path="."):
     precompile(project_dir, main, "")
     # print("Testing... Please wait.")
-    bar = progressbar.ProgressBar(max_value=progressbar.UnknownLength)
-    i = 0
-    while True:
-        corr, expr, subj = auto_test(main, package)
-        if not corr:
-            raise RuntimeError("Err: {}\n {}".format(expr.replace(" ", ""), subj))
-        bar.update(i)
-        i += 1
+    with progressbar.ProgressBar(max_value=TIMES) as bar:
+        for i in range(TIMES):
+            corr, expr, subj = auto_test(main, package)
+            if not corr:
+                raise RuntimeError("Err: {}\n {}".format(expr.replace(" ", ""), subj))
+            bar.update(i)
 
 
 def auto_test(mainClass, package):
@@ -125,7 +124,15 @@ if __name__ == "__main__":
     # hack(r"C:\Study\OO\homework\oo_course_2019_16191051_homework_1", "Main", "")
     # hack(r"C:\Study\OO\others\homework_1\ly", "Executive", "math.qiudao.")
     # hack(r"C:\Study\OO\others\homework_1\hjw", main="WorkBegin", package="work.")
-    hack(r"C:\Study\OO\homework\oo_course_2019_16191051_homework_2", [], "Main", "", ".")
+    # hack(C:\Study\OO\homework\oo_course_2019_16191051_homework_2", [], "Main", "", ".")
+
+    hack(r"C:\Study\OO\others\homework_2\Saber", [], "Main", "")
+    hack(r"C:\Study\OO\others\homework_2\Lancer", [], "PolynomialCal", "")
+    hack(r"C:\Study\OO\others\homework_2\Archer", [], "Expression", "")
+    hack(r"C:\Study\OO\others\homework_2\Caster", [], "Polynomial", "")
+    hack(r"C:\Study\OO\others\homework_2\Assassin", [], "Main", "homework.", "homework")  # huahua?
+    hack(r"C:\Study\OO\others\homework_2\Berserker", [], "Main", "", "")
+    hack( r"C:\Study\OO\others\homework_2\Alterego", [], "Main", "", "")
 
     # hack(r"C:\Study\OO\others\homework_1\Saber", [], "Main")
     # hack(r"C:\Study\OO\others\homework_1\Lancer", ["long_expo", "stack_overflow"], "Main")  # unhack
