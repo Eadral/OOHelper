@@ -30,13 +30,16 @@ if __name__ == "__main__":
     test_data = r"C:\Study\OO\homework\test_data\test_data_homework_2"
 
     # for i in range(500):
-    test(test_data, r"C:\Study\OO\homework\oo_course_2019_16191051_homework_2", [], "Main", "")
-    # test(test_data, r"C:\Study\OO\others\liuyang", [], "Main", "shigedidi.", "shigedidi")
+    # test(test_data, r"C:\Study\OO\homework\oo_course_2019_16191051_homework_2", [], "Main", "")
 
-    # test(test_data, r"C:\Study\OO\others\homework_1\Saber", [], "Main")
-    # test(test_data, r"C:\Study\OO\others\homework_1\Lancer", ["long_expo", "stack_overflow"], "Main")
-    # test(test_data, r"C:\Study\OO\others\homework_1\Archer", ["special_space", "special_space_1"], "PolyCal")
-    # test(test_data, r"C:\Study\OO\others\homework_1\Rider", [], "Main")
-    # test(test_data, r"C:\Study\OO\others\homework_1\Caster", ["auto_0"], "Main")
-    # test(test_data, r"C:\Study\OO\others\homework_1\Assassin", [], "Solution")
-    # test(test_data, r"C:\Study\OO\others\homework_1\Alterego", ["sign_first"], "PolyBuild")
+    test(test_data, r"C:\Study\OO\others\homework_2\Saber", [], "Main", "")
+    # test(test_data, r"C:\Study\OO\others\homework_2\Lancer", [], "PolynomialCal", "")
+    # test(test_data, r"C:\Study\OO\others\homework_2\Archer", [], "Expression", "")
+    # test(test_data, r"C:\Study\OO\others\homework_2\Caster", [], "Polynomial", "")
+    # test(test_data, r"C:\Study\OO\others\homework_2\Assassin", [], "Main", "homework.", "homework")  # huahua?
+    # test(test_data, r"C:\Study\OO\others\homework_2\Berserker", [], "Main", "", "")
+    # test(test_data, r"C:\Study\OO\others\homework_2\Alterego", [], "Main", "", "")
+
+
+
+
