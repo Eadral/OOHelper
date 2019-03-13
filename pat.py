@@ -28,6 +28,8 @@ def compare(target_path, subject_path):
         del target[-1]
     while subject[-1] == "\n":
         del subject[-1]
+    target = target[:0]
+    subject = subject[:0]
     n_lines = min(len(target), len(subject))
     for i in range(n_lines):
         if not equal(target_path.split(".")[0]+".in", target[i].rstrip(), subject[i].rstrip()):

@@ -2,13 +2,13 @@ from utils import *
 from pat import pat
 from utils import precompile
 import progressbar
+import time
 
-
-def test(test_data_folder, project_dir, ignores=None, main="Main", package=""):
+def test(test_data_folder, project_dir, ignores=None, main="Main", package="", main_path="."):
     if ignores is None:
         ignores = []
 
-    precompile(project_dir, main)
+    precompile(project_dir, main, main_path)
     # print("Testing... Please wait.")
     # test_data_folder = os.path.join(project_dir, "test_data")
     test_data_paths = get_paths_recursively(test_data_folder)
