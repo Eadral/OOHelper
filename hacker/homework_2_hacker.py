@@ -5,7 +5,6 @@ import os
 from sympy import Symbol, sin, cos, diff, trigsimp
 import progressbar
 
-os.chdir("..")
 
 x = Symbol("x")
 
@@ -17,7 +16,7 @@ range_coeff = 300
 TIMES = 1000
 
 def hack(project_dir, none=None, main="Main", package="", main_path="."):
-    precompile(project_dir, main, "")
+    precompile(project_dir, main, main_path)
     # print("Testing... Please wait.")
     with progressbar.ProgressBar(max_value=TIMES) as bar:
         for i in range(TIMES):
@@ -118,26 +117,3 @@ def test(name, expr, subject, positive=True):
     return equal(name, target, subject, check_length=False)
 
 
-if __name__ == "__main__":
-    print(gen_positive())
-    # print(split("7488*x^-97+1302*x^-94-4320*x^-81+6144*x^-65-3416*x^-62+48*x^7-75*x^14+864*x^15+960*x^39+4420*x^64+952*x^67"))
-    # hack(r"C:\Study\OO\homework\oo_course_2019_16191051_homework_1", "Main", "")
-    # hack(r"C:\Study\OO\others\homework_1\ly", "Executive", "math.qiudao.")
-    # hack(r"C:\Study\OO\others\homework_1\hjw", main="WorkBegin", package="work.")
-    # hack(C:\Study\OO\homework\oo_course_2019_16191051_homework_2", [], "Main", "", ".")
-
-    # hack(r"C:\Study\OO\others\homework_2\Saber", [], "Main", "")
-    # hack(r"C:\Study\OO\others\homework_2\Lancer", [], "PolynomialCal", "")
-    hack(r"C:\Study\OO\others\homework_2\Archer", [], "Expression", "")
-    hack(r"C:\Study\OO\others\homework_2\Caster", [], "Polynomial", "")
-    hack(r"C:\Study\OO\others\homework_2\Assassin", [], "Main", "homework.", "homework")  # huahua?
-    hack(r"C:\Study\OO\others\homework_2\Berserker", [], "Main", "", "")
-    hack( r"C:\Study\OO\others\homework_2\Alterego", [], "Main", "", "")
-
-    # hack(r"C:\Study\OO\others\homework_1\Saber", [], "Main")
-    # hack(r"C:\Study\OO\others\homework_1\Lancer", ["long_expo", "stack_overflow"], "Main")  # unhack
-    # hack(r"C:\Study\OO\others\homework_1\Archer", ["special_space"], "PolyCal")
-    # hack(r"C:\Study\OO\others\homework_1\Rider", [], "Main")
-    # hack(r"C:\Study\OO\others\homework_1\Caster", ["auto_0"], "Main") # checked
-    # hack(r"C:\Study\OO\others\homework_1\Assassin", [], "Solution")
-    # hack(r"C:\Study\OO\others\homework_1\Alterego", ["sign_first"], "PolyBuild")

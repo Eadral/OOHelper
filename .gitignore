@@ -4,3 +4,4 @@ manual_gen/
 venv/
 *.class
 temp/*.txt
+main.py
