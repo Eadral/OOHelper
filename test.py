@@ -4,11 +4,11 @@ from utils import precompile
 import progressbar
 
 
-def test(test_data_folder, project_dir, ignores=None, main="Main", package="", main_path="."):
+def test(test_data_folder, project_dir, ignores=None, main="Main", package=""):
     if ignores is None:
         ignores = []
 
-    precompile(project_dir, main, main_path)
+    precompile(project_dir, main)
     # print("Testing... Please wait.")
     # test_data_folder = os.path.join(project_dir, "test_data")
     test_data_paths = get_paths_recursively(test_data_folder)
@@ -27,10 +27,9 @@ def test(test_data_folder, project_dir, ignores=None, main="Main", package="", m
 
 
 if __name__ == "__main__":
-    test_data = r"C:\Study\OO\homework\test_data\test_data_homework_2"
+    test_data = r"E:\OO面向对象\OOHelper\test_data\test_data_homework_2"
 
-    test(test_data, r"C:\Study\OO\homework\oo_course_2019_16191051_homework_2", [], "Main", "")
-    # test(test_data, r"C:\Study\OO\others\liuyang", [], "Main", "shigedidi.", "shigedidi")
+    test(test_data, r"C:\Users\Wazak\Desktop\java\homework_2", ["stack_overflow","test_10"], "Main", "")
 
     # test(test_data, r"C:\Study\OO\others\homework_1\Saber", [], "Main")
     # test(test_data, r"C:\Study\OO\others\homework_1\Lancer", ["long_expo", "stack_overflow"], "Main")
