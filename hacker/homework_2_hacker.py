@@ -126,8 +126,8 @@ if __name__ == "__main__":
     # hack(r"C:\Study\OO\others\homework_1\hjw", main="WorkBegin", package="work.")
     # hack(C:\Study\OO\homework\oo_course_2019_16191051_homework_2", [], "Main", "", ".")
 
-    hack(r"C:\Study\OO\others\homework_2\Saber", [], "Main", "")
-    hack(r"C:\Study\OO\others\homework_2\Lancer", [], "PolynomialCal", "")
+    # hack(r"C:\Study\OO\others\homework_2\Saber", [], "Main", "")
+    # hack(r"C:\Study\OO\others\homework_2\Lancer", [], "PolynomialCal", "")
     hack(r"C:\Study\OO\others\homework_2\Archer", [], "Expression", "")
     hack(r"C:\Study\OO\others\homework_2\Caster", [], "Polynomial", "")
     hack(r"C:\Study\OO\others\homework_2\Assassin", [], "Main", "homework.", "homework")  # huahua?
