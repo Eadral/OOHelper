@@ -5,7 +5,6 @@ import os
 from sympy import Symbol, sin, cos, diff, trigsimp
 import progressbar
 
-os.chdir("..")
 
 x = Symbol("x")
 
@@ -17,7 +16,7 @@ range_coeff = 300
 TIMES = 1000
 
 def hack(project_dir, none=None, main="Main", package="", main_path="."):
-    precompile(project_dir, main, "")
+    precompile(project_dir, main, main_path)
     # print("Testing... Please wait.")
     with progressbar.ProgressBar(max_value=TIMES) as bar:
         for i in range(TIMES):
