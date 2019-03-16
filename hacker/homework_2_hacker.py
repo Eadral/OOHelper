@@ -5,7 +5,6 @@ import os
 from sympy import Symbol, sin, cos, diff, trigsimp
 import progressbar
 
-
 x = Symbol("x")
 
 n_term = 10
@@ -14,6 +13,7 @@ range_expo = 20
 range_coeff = 300
 
 TIMES = 1000
+
 
 def hack(project_dir, none=None, main="Main", package="", main_path="."):
     precompile(project_dir, main, main_path)
@@ -68,6 +68,7 @@ def gen_positive(n=n_term):
 
 global n_defect
 
+
 def try_defect(defect, normal):
     global n_defect
     if n_defect == 0:
@@ -75,6 +76,7 @@ def try_defect(defect, normal):
     if random.random() < 0.1:
         n_defect -= 1
         return defect
+
 
 def gen_negative(n=n_term):
     global n_defect
@@ -88,6 +90,7 @@ def gen_negative(n=n_term):
     if n_defect > 0:
         expr += random.choice(["@", "\f", "\v"])
     return expr
+
 
 def gen_term_negative(n=n_factor):
     global n_defect
@@ -115,5 +118,3 @@ def test(name, expr, subject, positive=True):
     else:
         target = "WRONG FORMAT!"
     return equal(name, target, subject, check_length=False)
-
-

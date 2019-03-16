@@ -32,7 +32,7 @@ def compare(target_path, subject_path):
     subject = subject[:1]
     n_lines = min(len(target), len(subject))
     for i in range(n_lines):
-        if not equal(target_path.split(".")[0]+".in", target[i].rstrip(), subject[i].rstrip()):
+        if not equal(target_path.split(".")[0] + ".in", target[i].rstrip(), subject[i].rstrip()):
             raise RuntimeError("WA in {} \n\t Line {} : except {} while found {}"
                                .format(target_path, i, target[i], subject[i]))
     if len(target) > len(subject):
@@ -41,5 +41,3 @@ def compare(target_path, subject_path):
     if len(target) < len(subject):
         raise RuntimeError(
             "WA in {} \n\t EOF: except NOTHING while found {}".format(target_path, subject[len(target) + 1]))
-
-

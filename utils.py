@@ -2,7 +2,9 @@ import os
 import random
 from sympy import Symbol, sin, cos, simplify
 import sys
+
 x = Symbol("x")
+
 
 def get_paths_recursively(folder):
     paths = []
@@ -19,8 +21,10 @@ def get_paths_recursively(folder):
 def random_bigint(len=100):
     return random.randint(-10 ** len + 1, 10 ** len - 1)
 
+
 def random_range(range=10):
     return random.randint(-range, range)
+
 
 def random_int():
     return random.randint(-2 ** 32, 2 ** 32 - 1)
@@ -28,7 +32,6 @@ def random_int():
 
 def random_space():
     return ' ' * random.randint(0, 10)
-
 
 
 def precompile(project_dir, main, main_path):
@@ -70,6 +73,7 @@ def equal(name, target, subject, check_length=True):
     except:
         return False
     return False
+
 
 if __name__ == "__main__":
     print(split("4*x^-2-16*x^-5-3*x^-4-20*x^-6-6-10*x+39*x^2+24*x^3-30*x^4"))

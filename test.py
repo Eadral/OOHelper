@@ -4,6 +4,7 @@ from utils import precompile
 import progressbar
 import time
 
+
 def test(test_data_folder, project_dir, ignores=None, main="Main", package="", main_path="."):
     if ignores is None:
         ignores = []
@@ -24,6 +25,3 @@ def test(test_data_folder, project_dir, ignores=None, main="Main", package="", m
             bar.update(i)
 
     # print("AC {}/{}".format(pass_num, len(test_data_in_paths)))
-
-
-
