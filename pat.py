@@ -13,7 +13,7 @@ def pat(input, output, mainClass, package):
     end = time()
     duration = end - start
     # print(duration, input)
-    if duration > 1.0:
+    if duration > 0.9:
         sys.stderr.write("\nWarning: TLE {} at {}\n".format(duration, input))
     test_output_path = os.path.join("temp", "output.txt")
     compare(output, test_output_path)
