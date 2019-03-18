@@ -67,12 +67,27 @@ def equal(name, target, subject, check_length=True):
     try:
         target = target.replace(" ", "")
         if simplify(simplify(eval(subject.replace("^", "**")) - eval(target.replace("^", "**")))).equals(0):
+            if not format_verify(subject):
+                return False
+
             if check_length and len(subject) > len(target):
                 sys.stderr.write("\nWarning: Equal but longer!! {} \n\t{}\n\t{}\n".format(name, target, subject))
+            sys.stderr.write("\nOutput: {}\n".format(subject))
+
             return True
     except:
         return False
     return False
+
+
+def format_verify(subject):
+    open("test_format.txt", "w").writelines([subject, "\n"])
+    os.system("java -jar oo_course_2019_16191051_homework_3.jar < {} > {}".format("test_format.txt", "format_output.txt"))
+    output = open("format_output.txt").read()
+    if output == "True\n":
+        return True
+    else:
+        return False
 
 
 if __name__ == "__main__":
