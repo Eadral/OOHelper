@@ -1,0 +1,1 @@
+(2*x-(3*sin(x)^2*cos(x)-sin(2*x)+1)*sin(xsin(x)^3+cos(x)^2)+27*cos(x))
