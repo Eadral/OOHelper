@@ -1,0 +1,1 @@
+(sin(sin(sin(x)))*sin(sin(sin(sin(x))))*cos(sin(sin(sin(x))))*cos(sin(sin(sin(sin(x)))))+sin(sin(sin(x)))*sin(sin(sin(sin(sin(x)))))*cos(sin(sin(sin(x))))+sin(sin(sin(sin(x))))*sin(sin(sin(sin(sin(x))))))*cos(x)*cos(sin(x))*cos(sin(sin(x)))
