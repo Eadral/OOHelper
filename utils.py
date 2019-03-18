@@ -72,7 +72,7 @@ def equal(name, target, subject, check_length=True):
 
             if check_length and len(subject) > len(target):
                 sys.stderr.write("\nWarning: Equal but longer!! {} \n\t{}\n\t{}\n".format(name, target, subject))
-            sys.stderr.write("\nOutput: {}\n".format(subject))
+            # sys.stderr.write("\nOutput: {}\n".format(subject))
 
             return True
     except:
