@@ -1,0 +1,1 @@
+x^4*(-2*x*(x+2)*sin(x^2)+(2*x+3)*sin(x)+(x*(x+2)+x+2)*cos(x)+cos(x^2)+1)+4*x^3*(x+(x+2)*cos(x^2)+(x*(x+2)+x+2)*sin(x)+2)+(2*x+1)*cos(x)*cos(x*(x+1))-sin(x)*sin(x*(x+1))
