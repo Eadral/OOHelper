@@ -6,3 +6,5 @@ venv/
 temp/*.txt
 main.py
 *.txt
+.ipynb_checkpoints/
+*.ipynb
