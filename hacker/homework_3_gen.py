@@ -4,13 +4,15 @@ import subprocess
 import os
 from sympy import Symbol, sin, cos, diff, trigsimp
 import progressbar
+import time
+from hacker.generate import generator
 
 x = Symbol("x")
 
-n_term = 10
-n_factor = 10
-range_expo = 20
-range_coeff = 300
+n_term = 3
+n_factor = 3
+range_expo = 10
+range_coeff = 10
 
 TIMES = 1000
 
@@ -29,7 +31,8 @@ def hack(project_dir, none=None, main="Main", package="", main_path="."):
 def auto_test(mainClass, package):
     positive = True
     if random.random() < 1.0:
-        expr = gen_positive(random.randint(1, n_term))
+        # expr = gen_positive(random.randint(1, n_term))
+        expr = generator()
     else:
         expr = gen_negative(random.randint(1, n_term))
         positive = False
@@ -46,12 +49,7 @@ def gen_term_positive(n=n_factor):
         n -= 1
     terms = []
     for i in range(n):
-        terms.append("{}".format(random.choice([
-            "x^{}".format(random_range(range_expo)),
-            "sin(x)^{}".format(random_range(range_expo)),
-            "cos(x)^{}".format(random_range(range_expo)),
-            "{}".format(random_range(range_coeff)),
-        ])))
+        terms.append("{}".format(gen_factor()))
     term += "*".join(terms)
     return term
 
@@ -100,14 +98,29 @@ def gen_term_negative(n=n_factor):
         n -= 1
     terms = []
     for i in range(n):
-        terms.append("{}".format(random.choice([
-            "x^{}".format(random_range(range_expo)),
-            "sin(x)^{}".format(random_range(range_expo)),
-            "cos(x)^{}".format(random_range(range_expo)),
-            "{}".format(random_range(range_coeff)),
-        ])))
+        terms.append("{}".format(gen_factor()))
     term += "*".join(terms)
     return term
+
+global times
+times = 0
+def gen_factor():
+    global times
+    if times <= 3 and random.random() < 0.5:
+        times += 1
+        inside_factor = gen_factor()
+        inside_expr = gen_positive()
+    else:
+        inside_factor = "x"
+        inside_expr = "(x)"
+
+    return random.choice([
+        "{}".format(random_range(range_coeff)),
+        "x^{}".format(random_range(range_expo)),
+        "sin({})^{}".format(inside_factor, random_range(range_expo)),
+        "cos({})^{}".format(inside_factor, random_range(range_expo)),
+        "({})".format(inside_expr),
+    ])
 
 
 def test(name, expr, subject, positive=True):
@@ -118,3 +131,7 @@ def test(name, expr, subject, positive=True):
     else:
         target = "WRONG FORMAT!"
     return equal(name, target, subject, check_length=False)
+
+
+if __name__ == "__main__":
+    print(gen_positive())
