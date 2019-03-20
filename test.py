@@ -17,6 +17,7 @@ def test(test_data_folder, project_dir, ignores=None, main="Main", package="", m
     pass_num = 0
     with progressbar.ProgressBar(max_value=len(test_data_in_paths)) as bar:
         for i, test_data_in in enumerate(test_data_in_paths):
+            print(test_data_in)
             if test_data_in.split("\\")[-1].split(".")[0] in ignores:
                 continue
             test_data_out = test_data_in.split('.')[0] + ".out"

@@ -1,6 +1,7 @@
 import os
 import random
 from sympy import Symbol, sin, cos, simplify
+import sympy
 import sys
 
 x = Symbol("x")
@@ -65,8 +66,16 @@ def equal(name, target, subject, check_length=True):
     if target == subject:
         return True
     try:
+        if target == "WRONG FORMAT!":
+            return True
         target = target.replace(" ", "")
-        if simplify(simplify(eval(subject.replace("^", "**")) - eval(target.replace("^", "**")))).equals(0):
+
+        a = eval(subject.replace("^", "**"))
+        b = eval(target.replace("^", "**"))
+        if a == sympy.nan or b == sympy.nan:
+            sys.stderr.write("\nWarning: Divide by 0 {} \n\t{}\n\t{}\n".format(name, target, subject))
+            return True
+        if simplify(simplify(a - b)).equals(0):
             if not format_verify(subject):
                 return False
 
