@@ -8,3 +8,4 @@ unit1/main.py
 *.txt
 .ipynb_checkpoints/
 *.ipynb
+temp/
