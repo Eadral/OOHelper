@@ -14,11 +14,11 @@ import ctypes
 import signal
 
 
-def pat(test_data_in, class_path, jar):
+def pat(test_data_in, class_path, jar, timeout):
     inputfile = open(test_data_in).readlines()
 
     input = parseInput(inputfile)
-    outputfile = callProgram(r"java -cp {} {}".format(jar, class_path), inputfile, 30)
+    outputfile = callProgram(r"java -cp {} {}".format(jar, class_path), inputfile, timeout)
     output = parseOutput(outputfile)
     return checkAll(input, output)
 
@@ -52,7 +52,7 @@ def callProgram(cmd, inputFile, timeout=200):
     os.chdir("temp")
     output = []
     p = subprocess.Popen(cmd,
-                         shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+                         shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     w = threading.Thread(target=run, args=(p, output,))
     last_time = 0
     for line in inputFile:
