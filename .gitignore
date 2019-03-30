@@ -1,10 +1,10 @@
 .idea/
 __pycache__/
-manual_gen/
+unit1/manual_gen/
 venv/
 *.class
 temp/*.txt
-main.py
+unit1/main.py
 *.txt
 .ipynb_checkpoints/
 *.ipynb
