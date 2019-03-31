@@ -1,4 +1,3 @@
-
 TIME_LIMIT = 200
 
 MIN_LEVEL = 1

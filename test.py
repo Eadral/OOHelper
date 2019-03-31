@@ -7,6 +7,8 @@ from concurrent.futures import ThreadPoolExecutor, wait
 
 failed = []
 pass_num = 0
+
+
 def test(n_thread, jar, test_data_folder, project_dir, ignores=None, main="Main", package="", main_path="."):
     if not os.path.exists("temp"):
         os.mkdir("temp")
@@ -52,4 +54,3 @@ def pat_thread(test_data_in, class_path, jar):
         pass_num += 1
     else:
         failed.append(test_data_in)
-

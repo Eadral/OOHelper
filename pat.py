@@ -14,6 +14,7 @@ import signal
 from macro import *
 from utils import datacheck
 
+
 def pat(test_data_in, class_path, jar):
     inputfile = open(test_data_in).readlines()
 
@@ -23,7 +24,7 @@ def pat(test_data_in, class_path, jar):
     start = time.time()
     outputfile = callProgram(r"java -cp {} {}".format(jar, class_path), inputfile, maxtime)
     end = time.time()
-    passed_time = end-start
+    passed_time = end - start
 
     output = parseOutput(outputfile)
 
@@ -44,7 +45,6 @@ def pat(test_data_in, class_path, jar):
         return False
 
 
-
 def checkAll(input, output):
     r_1_1 = check_1_1(input, output)
     r_1_2 = check_1_2(input, output)
@@ -62,6 +62,7 @@ def checkAll(input, output):
     if r_2 is not True:
         return "check_2: \n\t" + str(r_2)
     return True
+
 
 def parseInput(inputfile):
     personRequests = []
@@ -81,8 +82,8 @@ def run(p, output):
 
 
 def callProgram(cmd, inputFile, timeout=200):
-#     os.chdir("temp")
-#     print(inputFile)
+    #     os.chdir("temp")
+    #     print(inputFile)
     output = []
     p = subprocess.Popen(cmd,
                          shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -104,8 +105,8 @@ def callProgram(cmd, inputFile, timeout=200):
     p.stdin.close()
     if p.wait(timeout) != 0:
         return []
-#     os.chdir("..")
-#     print(output)
+    #     os.chdir("..")
+    #     print(output)
     return output
 
 
@@ -171,7 +172,7 @@ def check_1_1(input, output):
     assert len(time) == len(level)
     for i in range(len(time) - 1):
         if not (time[i + 1] - time[i] > abs(level[i + 1] - level[i]) * 0.5 - 0.001):
-            return sequence[i-1], sequence[i], sequence[i+1]
+            return sequence[i - 1], sequence[i], sequence[i + 1]
     return True
 
 
@@ -182,11 +183,11 @@ def check_1_2(intput, output):
         if mesType == "OPEN" and i != 0:
             if not (float(sequence[i + 1][1][0]) - float(sequence[i][1][0]) > 0.25 - 0.001):
                 print(sequence[i + 1], sequence[i])
-                return sequence[i-1], sequence[i], sequence[i+1]
+                return sequence[i - 1], sequence[i], sequence[i + 1]
         if mesType == "CLOSE" and i != length - 1:
             if not (float(sequence[i][1][0]) - float(sequence[i - 1][1][0]) > 0.25 - 0.001):
                 print(sequence[i], sequence[i - 1])
-                return sequence[i-1], sequence[i], sequence[i+1]
+                return sequence[i - 1], sequence[i], sequence[i + 1]
     return True
 
 
@@ -214,7 +215,7 @@ def check_1_3(input, output):
     for i, (mesType, mes) in enumerate(sequence):
         if i != 1 and not isClosed and (getLevel(sequence[i - 1]) != getLevel(sequence[i])):
             print(sequence[i - 1], sequence[i])
-            return sequence[i-1], sequence[i], sequence[i+1]
+            return sequence[i - 1], sequence[i], sequence[i + 1]
 
         if mesType == "OPEN":
             isClosed = False
@@ -228,7 +229,7 @@ def check_1_4(input, output):
     isOpen = False
     for i, (mesType, mes) in enumerate(sequence):
         if not isOpen and (mesType == "IN" or mesType == "OUT"):
-            return sequence[i-1], sequence[i], sequence[i+1]
+            return sequence[i - 1], sequence[i], sequence[i + 1]
         if mesType == "OPEN":
             isOpen = True
         if mesType == "CLOSE":
@@ -255,7 +256,7 @@ def check_2(input, output):
             thisID = getId(sequence[i])
             del id_now[thisID]
             if thisID in ele:
-                return sequence[i-1], sequence[i], sequence[i+1]
+                return sequence[i - 1], sequence[i], sequence[i + 1]
             ele.add(thisID)
         if mesType == "OUT":
             thisID = getId(sequence[i])
