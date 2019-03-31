@@ -10,3 +10,4 @@ unit1/main.py
 *.ipynb
 temp/
 *.jar
+test_data/auto/
