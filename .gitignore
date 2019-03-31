@@ -9,3 +9,4 @@ unit1/main.py
 .ipynb_checkpoints/
 *.ipynb
 temp/
+*.jar
