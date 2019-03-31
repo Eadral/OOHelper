@@ -1,6 +1,5 @@
 import os
 import sys
-from utils import *
 from time import time
 import re
 import subprocess
@@ -49,7 +48,8 @@ def run(p, output):
 
 
 def callProgram(cmd, inputFile, timeout=200):
-    os.chdir("temp")
+#     os.chdir("temp")
+#     print(inputFile)
     output = []
     p = subprocess.Popen(cmd,
                          shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -71,7 +71,8 @@ def callProgram(cmd, inputFile, timeout=200):
     w.join(timeout=timeout)
     p.stdin.close()
     stop_thread(w)
-    os.chdir("..")
+#     os.chdir("..")
+#     print(output)
     return output
 
 
@@ -121,11 +122,11 @@ def parseOutput(inputfile):
             sequence.append(["CLOSE", result.groups()])
             CLOSE.append(result.groups())
             continue
-    return sequence, IN, OUT, OPEN, CLOSE
+    return sequence
 
 
 def check_1_1(input, output):
-    sequence, IN, OUT, OPEN, CLOSE = output
+    sequence = output
     time = []
     level = []
     for mesType, mes in sequence:
@@ -142,7 +143,7 @@ def check_1_1(input, output):
 
 
 def check_1_2(intput, output):
-    sequence, IN, OUT, OPEN, CLOSE = output
+    sequence = output
     length = len(sequence)
     for i, (mesType, mes) in enumerate(sequence):
         if mesType == "OPEN" and i != 0:
@@ -175,7 +176,7 @@ def getId(sequence):
 
 
 def check_1_3(input, output):
-    sequence, IN, OUT, OPEN, CLOSE = output
+    sequence = output
     isClosed = True
     for i, (mesType, mes) in enumerate(sequence):
         if i != 1 and not isClosed and (getLevel(sequence[i - 1]) != getLevel(sequence[i])):
@@ -190,7 +191,7 @@ def check_1_3(input, output):
 
 
 def check_1_4(input, output):
-    sequence, IN, OUT, OPEN, CLOSE = output
+    sequence = output
     isOpen = False
     for i, (mesType, mes) in enumerate(sequence):
         if not isOpen and (mesType == "IN" or mesType == "OUT"):
@@ -199,6 +200,8 @@ def check_1_4(input, output):
             isOpen = True
         if mesType == "CLOSE":
             isOpen = False
+    if isOpen == True:
+        return False
     return True
 
 
@@ -212,7 +215,7 @@ def check_2(input, output):
         id_to[int(id_)] = int(to)
         id_set.append(int(id_))
     #     print(id_now)
-    sequence, IN, OUT, OPEN, CLOSE = output
+    sequence = output
     for i, (mesType, mes) in enumerate(sequence):
         #         print(sequence[i])
         if mesType == "IN":

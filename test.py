@@ -3,9 +3,10 @@ from pat import pat
 from utils import precompile
 # import progressbar
 import time
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, wait
 
 failed = []
+pass_num = 0
 def test(timeout, jar, test_data_folder, project_dir, ignores=None, main="Main", package="", main_path="."):
     if not os.path.exists("temp"):
         os.mkdir("temp")
@@ -17,25 +18,40 @@ def test(timeout, jar, test_data_folder, project_dir, ignores=None, main="Main",
     # test_data_folder = os.path.join(project_dir, "test_data")
     test_data_paths = get_paths_recursively(test_data_folder)
     test_data_in_paths = list(filter(lambda path: path.split('.')[-1] == "in", test_data_paths))
-    pass_num = 0
 
-    with ThreadPoolExecutor(5) as executor:
+    p_list = []
+    with ThreadPoolExecutor(16) as executor:
         for i, test_data_in in enumerate(test_data_in_paths):
             if test_data_in.split("\\")[-1].split(".")[0] in ignores:
                 continue
-            # executor.submit(pat_thread, test_data_in, package + main, jar)
+            child = executor.submit(pat_thread, test_data_in, package + main, jar, timeout)
+            p_list.append(child)
+            # if pat(test_data_in, package + main, jar, timeout):
+            #     pass_num += 1
+            #     print("Passed: {}".format(test_data_in))
+    wait(p_list)
+    # for p in p_list:
+    #     print(p.done())
+    #
+    time.sleep(0.01)
+    global pass_num
 
-            if pat(test_data_in, package + main, jar, timeout):
-                pass_num += 1
-                print("Passed: {}".format(test_data_in))
+    if len(failed) != 0:
+        print("\033[1;33mAC {}/{}\033[0m".format(pass_num, len(test_data_in_paths)))
+        print("\033[1;31mFailed:", failed)
+    else:
+        print("\033[1;32mAC {}/{}\033[0m".format(pass_num, len(test_data_in_paths)))
 
 
-    print("AC {}/{}".format(pass_num, len(test_data_in_paths)))
+def pat_thread(test_data_in, class_path, jar, timeout):
+    global failed
+    global pass_num
+    print("\033[1;37mTesting: {}\033[0m".format(test_data_in))
+    result = pat(test_data_in, class_path, jar, timeout)
+    if result:
+        print("\033[1;32mPassed: {}\033[0m".format(test_data_in))
+        pass_num += 1
+    else:
+        failed.append(test_data_in)
+        print("\033[1;31mFailed: {}\033[0m".format(test_data_in))
 
-    # print(failed)
-
-# def pat_thread(test_data_in, class_path, jar):
-#     global failed
-#     result = pat(test_data_in, class_path, jar)
-#     if not result:
-#         failed.append(test_data_in)

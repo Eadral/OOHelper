@@ -5,6 +5,7 @@ if __name__ == "__main__":
     test_data = r"test_data"
     jar = ";".join([
         r".",
+        r"temp",
         r"C:\Study\OO\homework\unit2\elevator-input-hw1-1.3-jar-with-dependencies.jar",
         r"C:\Study\OO\homework\unit2\timable-output-1.0-raw-jar-with-dependencies.jar",
     ])
