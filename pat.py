@@ -11,15 +11,18 @@ import time
 import inspect
 import ctypes
 import signal
+from macro import *
 
-
-def pat(test_data_in, class_path, jar, timeout):
+def pat(test_data_in, class_path, jar):
+    start = time.time()
     inputfile = open(test_data_in).readlines()
 
     input = parseInput(inputfile)
-    outputfile = callProgram(r"java -cp {} {}".format(jar, class_path), inputfile, timeout)
+    outputfile = callProgram(r"java -cp {} {}".format(jar, class_path), inputfile, TIME_LIMIT - start)
     output = parseOutput(outputfile)
-    return checkAll(input, output)
+    end = time.time()
+
+    return checkAll(input, output) and end - start < TIME_LIMIT
 
 
 def checkAll(input, output):
@@ -68,9 +71,9 @@ def callProgram(cmd, inputFile, timeout=200):
         p.stdin.flush()
         time.sleep(1)
     w.start()
-    w.join(timeout=timeout)
     p.stdin.close()
-    stop_thread(w)
+    if p.wait(timeout) != 0:
+        return []
 #     os.chdir("..")
 #     print(output)
     return output

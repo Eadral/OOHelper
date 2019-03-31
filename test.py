@@ -7,7 +7,7 @@ from concurrent.futures import ThreadPoolExecutor, wait
 
 failed = []
 pass_num = 0
-def test(timeout, jar, test_data_folder, project_dir, ignores=None, main="Main", package="", main_path="."):
+def test(jar, test_data_folder, project_dir, ignores=None, main="Main", package="", main_path="."):
     if not os.path.exists("temp"):
         os.mkdir("temp")
     if ignores is None:
@@ -24,7 +24,7 @@ def test(timeout, jar, test_data_folder, project_dir, ignores=None, main="Main",
         for i, test_data_in in enumerate(test_data_in_paths):
             if test_data_in.split("\\")[-1].split(".")[0] in ignores:
                 continue
-            child = executor.submit(pat_thread, test_data_in, package + main, jar, timeout)
+            child = executor.submit(pat_thread, test_data_in, package + main, jar)
             p_list.append(child)
             # if pat(test_data_in, package + main, jar, timeout):
             #     pass_num += 1
@@ -43,11 +43,11 @@ def test(timeout, jar, test_data_folder, project_dir, ignores=None, main="Main",
         print("\033[1;32mAC {}/{}\033[0m".format(pass_num, len(test_data_in_paths)))
 
 
-def pat_thread(test_data_in, class_path, jar, timeout):
+def pat_thread(test_data_in, class_path, jar):
     global failed
     global pass_num
     print("\033[1;37mTesting: {}\033[0m".format(test_data_in))
-    result = pat(test_data_in, class_path, jar, timeout)
+    result = pat(test_data_in, class_path, jar)
     if result:
         print("\033[1;32mPassed: {}\033[0m".format(test_data_in))
         pass_num += 1
