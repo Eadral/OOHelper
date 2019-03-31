@@ -29,17 +29,17 @@ def pat(test_data_in, class_path, jar):
 
     ac = checkAll(input, output)
     t_ac = passed_time < maxtime
-    if ac and t_ac:
+    if ac is True and t_ac is True:
         if passed_time > basetime + 1:
             print("\033[1;33mWarning: {}\n\ttime: {}, base_time: {}, max_time\033[0m"
                   .format(test_data_in, passed_time, basetime, maxtime))
             return True
         print("\033[1;32mPassed: {}\033[0m".format(test_data_in))
         return True
-    if not ac:
+    if ac is not True:
         print("\033[1;31mFailed: {}\n\tWA: {}\033[0m".format(test_data_in, ac))
         return False
-    if not t_ac:
+    if t_ac is not True:
         print("\033[1;31mFailed: {}\n\tTLE: {}, max_time: {}\033[0m".format(test_data_in, passed_time, maxtime))
         return False
 
@@ -66,7 +66,7 @@ def checkAll(input, output):
 def parseInput(inputfile):
     personRequests = []
     for line in inputfile:
-        result = re.search(r'\[(.*)\](\d+)-FROM-(\d+)-TO-(\d+)', line.strip(), re.M | re.I)
+        result = re.search(r'\[(.*)\](\d+)-FROM-(\d+)-TO-(\d+)', line.strip(), re.M)
         personRequests.append(result.groups())
     return personRequests
 
@@ -89,7 +89,7 @@ def callProgram(cmd, inputFile, timeout=200):
     w = threading.Thread(target=run, args=(p, output,))
     last_time = 0
     for line in inputFile:
-        result = re.search(r'\[(.*)\](.*)', line.strip(), re.M | re.I)
+        result = re.search(r'\[(.*)\](.*)', line.strip(), re.M)
         sleeptime = result.group(1)
         inputLine = result.group(2)
         #     print(sleeptime)
@@ -135,22 +135,22 @@ def parseOutput(inputfile):
     OPEN = []
     CLOSE = []
     for line in inputfile:
-        result = re.search(r'\[(.*)\]IN-(\d+)-(\d+)', line.strip(), re.M | re.I)
+        result = re.search(r'\[(.*)\]IN-(\d+)-(\d+)', line.strip(), re.M)
         if result is not None:
             sequence.append(["IN", result.groups()])
             IN.append(result.groups())
             continue
-        result = re.search(r'\[(.*)\]OUT-(\d+)-(\d+)', line.strip(), re.M | re.I)
+        result = re.search(r'\[(.*)\]OUT-(\d+)-(\d+)', line.strip(), re.M)
         if result is not None:
             sequence.append(["OUT", result.groups()])
             OUT.append(result.groups())
             continue
-        result = re.search(r'\[(.*)\]OPEN-(\d+)', line.strip(), re.M | re.I)
+        result = re.search(r'\[(.*)\]OPEN-(\d+)', line.strip(), re.M)
         if result is not None:
             sequence.append(["OPEN", result.groups()])
             OPEN.append(result.groups())
             continue
-        result = re.search(r'\[(.*)\]CLOSE-(\d+)', line.strip(), re.M | re.I)
+        result = re.search(r'\[(.*)\]CLOSE-(\d+)', line.strip(), re.M)
         if result is not None:
             sequence.append(["CLOSE", result.groups()])
             CLOSE.append(result.groups())

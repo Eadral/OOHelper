@@ -17,8 +17,8 @@ def get_paths_recursively(folder):
 def datacheck(test_data_in):
     result = os.popen(r"test_data\datacheck.exe -i {}".format(test_data_in))
     output = result.read()
-    basetime = re.search(r'base time is (\d+)', output, re.M | re.I)
-    maxtime = re.search(r'max time is (\d+)', output, re.M | re.I)
+    basetime = re.search(r'base time is (\d+)', output, re.M)
+    maxtime = re.search(r'max time is (\d+)', output, re.M)
     if basetime is None:
         print("\033Illegal input: {}\033[0m".format(test_data_in))
         return 0, 0
