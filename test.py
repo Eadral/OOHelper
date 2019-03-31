@@ -7,7 +7,7 @@ from concurrent.futures import ThreadPoolExecutor, wait
 
 failed = []
 pass_num = 0
-def test(jar, test_data_folder, project_dir, ignores=None, main="Main", package="", main_path="."):
+def test(n_thread, jar, test_data_folder, project_dir, ignores=None, main="Main", package="", main_path="."):
     if not os.path.exists("temp"):
         os.mkdir("temp")
     if ignores is None:
@@ -20,7 +20,7 @@ def test(jar, test_data_folder, project_dir, ignores=None, main="Main", package=
     test_data_in_paths = list(filter(lambda path: path.split('.')[-1] == "in", test_data_paths))
 
     p_list = []
-    with ThreadPoolExecutor(16) as executor:
+    with ThreadPoolExecutor(n_thread) as executor:
         for i, test_data_in in enumerate(test_data_in_paths):
             if test_data_in.split("\\")[-1].split(".")[0] in ignores:
                 continue
@@ -48,10 +48,8 @@ def pat_thread(test_data_in, class_path, jar):
     global pass_num
     print("\033[1;37mTesting: {}\033[0m".format(test_data_in))
     result = pat(test_data_in, class_path, jar)
-    if result:
-        print("\033[1;32mPassed: {}\033[0m".format(test_data_in))
+    if result is True:
         pass_num += 1
     else:
         failed.append(test_data_in)
-        print("\033[1;31mFailed: {}\033[0m".format(test_data_in))
 

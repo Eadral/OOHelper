@@ -1,6 +1,7 @@
 import os
 import random
 import sys
+import re
 
 def get_paths_recursively(folder):
     paths = []
@@ -13,6 +14,15 @@ def get_paths_recursively(folder):
             paths.append(path)
     return paths
 
+def datacheck(test_data_in):
+    result = os.popen(r"test_data\datacheck.exe -i {}".format(test_data_in))
+    output = result.read()
+    basetime = re.search(r'base time is (\d+)', output, re.M | re.I)
+    maxtime = re.search(r'max time is (\d+)', output, re.M | re.I)
+    if basetime is None:
+        print("\033Illegal input: {}\033[0m".format(test_data_in))
+        return 0, 0
+    return int(basetime.group(1)), int(maxtime.group(1))
 
 def precompile(project_dir, main, main_path, jar):
     class_path = os.path.join("temp", "{}.class".format(main))
