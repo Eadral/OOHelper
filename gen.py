@@ -2,6 +2,7 @@ import random
 from macro import *
 import time
 import os
+from utils import datacheck
 
 id_now = 1
 
@@ -30,6 +31,11 @@ def gen_batch(time, n):
 
 def save(filename, lines):
     open(filename, "w").writelines(lines)
+    check = datacheck(filename)
+    if check[0] == 0:
+        os.remove(filename)
+        return
+    print("Generated: {}  base_time: {}, max_time: {}".format(filename, check[0], check[1]))
 
 def autoname():
     return "auto_{}.in".format("".join(str(time.time()).split('.')))
@@ -46,7 +52,7 @@ def gen(n_batch, batch_size, time_interval=1):
 
 if __name__ == "__main__":
     gen_path = r"test_data\auto"
-    for i in range(5):
+    for i in range(45):
         save(os.path.join(gen_path, autoname()), gen(n_batch=3, batch_size=5, time_interval=1))
 
 
