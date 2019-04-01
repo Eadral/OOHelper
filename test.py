@@ -9,6 +9,17 @@ failed = []
 pass_num = 0
 
 
+def test_single(jar, test_file, project_dir, ignores=None, main="Main", package="", main_path="."):
+    if not os.path.exists("temp"):
+        os.mkdir("temp")
+    if ignores is None:
+        ignores = []
+
+    precompile(project_dir, main, main_path, jar)
+    print("\033[1;37mTesting: {}\033[0m".format(test_file))
+    pat(test_file, package + main, jar)
+
+
 def test(n_thread, jar, test_data_folder, project_dir, ignores=None, main="Main", package="", main_path="."):
     if not os.path.exists("temp"):
         os.mkdir("temp")
@@ -54,3 +65,18 @@ def pat_thread(test_data_in, class_path, jar):
         pass_num += 1
     else:
         failed.append(test_data_in)
+
+# if __name__ == "__main__":
+#     jar = ";".join([
+#         r".",
+#         r"temp",
+#         r"C:\Study\OO\homework\unit2\elevator-input-hw1-1.3-jar-with-dependencies.jar",
+#         r"C:\Study\OO\homework\unit2\timable-output-1.0-raw-jar-with-dependencies.jar",
+#     ])
+#     n_thread = 64  # thread number of evaluator
+#     test_data = r"test_data"
+#
+#
+#     test(n_thread, jar, test_data, r"C:\Study\OO\homework\unit2\oo_course_2019_16191051_homework_5", [], "Main", "", ".")
+#
+#

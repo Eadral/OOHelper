@@ -22,7 +22,7 @@ def pat(test_data_in, class_path, jar):
     input = parseInput(inputfile)
 
     start = time.time()
-    outputfile = callProgram(r"java -cp {} {}".format(jar, class_path), inputfile, maxtime)
+    outputfile = callProgram(r"java -Xmx128m -cp {} {}".format(jar, class_path), inputfile, maxtime)
     end = time.time()
     passed_time = end - start
 
@@ -32,7 +32,7 @@ def pat(test_data_in, class_path, jar):
     t_ac = passed_time < maxtime
     if ac is True and t_ac is True:
         if passed_time > basetime + 1:
-            print("\033[1;33mWarning: {}\n\ttime: {}, base_time: {}, max_time\033[0m"
+            print("\033[1;33mWarning: {}\n\ttime: {}, base_time: {}, max_time: {}\033[0m"
                   .format(test_data_in, passed_time, basetime, maxtime))
             return True
         print("\033[1;32mPassed: {}\033[0m".format(test_data_in))
@@ -52,15 +52,15 @@ def checkAll(input, output):
     r_1_4 = check_1_4(input, output)
     r_2 = check_2(input, output)
     if r_1_1 is not True:
-        return "check_1_1: \n\t" + str(r_1_1)
+        return "check_1_1: \n\t" + str(r_1_1) + "\n\t" + str(output)
     if r_1_2 is not True:
-        return "check_1_2: \n\t" + str(r_1_2)
+        return "check_1_2: \n\t" + str(r_1_2) + "\n\t" + str(output)
     if r_1_3 is not True:
-        return "check_1_3: \n\t" + str(r_1_3)
+        return "check_1_3: \n\t" + str(r_1_3) + "\n\t" + str(output)
     if r_1_4 is not True:
-        return "check_1_4: \n\t" + str(r_1_4)
+        return "check_1_4: \n\t" + str(r_1_4) + "\n\t" + str(output)
     if r_2 is not True:
-        return "check_2: \n\t" + str(r_2)
+        return "check_2: \n\t" + str(r_2) + "\n\t" + str(output)
     return True
 
 
@@ -172,7 +172,7 @@ def check_1_1(input, output):
     assert len(time) == len(level)
     for i in range(len(time) - 1):
         if not (time[i + 1] - time[i] > abs(level[i + 1] - level[i]) * 0.5 - 0.001):
-            return sequence[i - 1], sequence[i], sequence[i + 1]
+            return "The elevator has no enough time to move such far distance at {}".format(i)
     return True
 
 
@@ -182,12 +182,12 @@ def check_1_2(intput, output):
     for i, (mesType, mes) in enumerate(sequence):
         if mesType == "OPEN" and i != 0:
             if not (float(sequence[i + 1][1][0]) - float(sequence[i][1][0]) > 0.25 - 0.001):
-                print(sequence[i + 1], sequence[i])
-                return sequence[i - 1], sequence[i], sequence[i + 1]
+                # print(sequence[i + 1], sequence[i])
+                return "The elevator has no enough time to open at {}".format(i)
         if mesType == "CLOSE" and i != length - 1:
             if not (float(sequence[i][1][0]) - float(sequence[i - 1][1][0]) > 0.25 - 0.001):
-                print(sequence[i], sequence[i - 1])
-                return sequence[i - 1], sequence[i], sequence[i + 1]
+                # print(sequence[i], sequence[i - 1])
+                return "The elevator has no enough time to close at {}".format(i)
     return True
 
 
@@ -215,7 +215,7 @@ def check_1_3(input, output):
     for i, (mesType, mes) in enumerate(sequence):
         if i != 1 and not isClosed and (getLevel(sequence[i - 1]) != getLevel(sequence[i])):
             print(sequence[i - 1], sequence[i])
-            return sequence[i - 1], sequence[i], sequence[i + 1]
+            return "The elevator is open at {} while you want it move".format(i)
 
         if mesType == "OPEN":
             isClosed = False
@@ -229,13 +229,13 @@ def check_1_4(input, output):
     isOpen = False
     for i, (mesType, mes) in enumerate(sequence):
         if not isOpen and (mesType == "IN" or mesType == "OUT"):
-            return sequence[i - 1], sequence[i], sequence[i + 1]
+            return "The elevator is closed at {} while you want someone in/out.".format(i)
         if mesType == "OPEN":
             isOpen = True
         if mesType == "CLOSE":
             isOpen = False
     if isOpen == True:
-        return sequence[-2], sequence[-1]
+        return "Elevator is not closed at the end."
     return True
 
 
@@ -256,15 +256,17 @@ def check_2(input, output):
             thisID = getId(sequence[i])
             del id_now[thisID]
             if thisID in ele:
-                return sequence[i - 1], sequence[i], sequence[i + 1]
+                return "{} has been in the elevator at {} while you want the guy in again.".format(thisID, i)
             ele.add(thisID)
         if mesType == "OUT":
             thisID = getId(sequence[i])
+            if thisID not in ele:
+                return "{} is not in the elevator at {} while you want the guy out.".format(thisID, i)
             ele.remove(thisID)
             id_now[thisID] = getLevel(sequence[i])
     if len(ele) > 0:
-        return sequence
+        return "{} still in the elevator.".format(ele)
     for id_ in id_set:
         if id_now[int(id_)] != id_to[int(id_)]:
-            return sequence
+            return "{} in the wrong floor at the end.".format(id_)
     return True

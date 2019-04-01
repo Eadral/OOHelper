@@ -11,3 +11,4 @@ unit1/main.py
 temp/
 *.jar
 test_data/auto/
+main.py
