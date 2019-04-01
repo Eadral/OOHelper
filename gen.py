@@ -65,4 +65,4 @@ if __name__ == "__main__":
         os.mkdir(gen_path)
     n = 50
     for i in range(n):
-        save(os.path.join(gen_path, autoname()), gen(n_batch=3, batch_size=5, time_interval=1))
+        save(os.path.join(gen_path, autoname()), gen(n_batch=3, batch_size=6, time_interval=5))

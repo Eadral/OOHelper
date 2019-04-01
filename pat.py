@@ -22,7 +22,7 @@ def pat(test_data_in, class_path, jar):
     input = parseInput(inputfile)
 
     start = time.time()
-    outputfile = callProgram(r"java -Xmx128m -cp {} {}".format(jar, class_path), inputfile, maxtime)
+    outputfile = callProgram(r"java -Xmx128m -cp {} {}".format(jar, class_path), inputfile)
     end = time.time()
     passed_time = end - start
 
@@ -81,12 +81,12 @@ def run(p, output):
         output.append(line.decode().strip())
 
 
-def callProgram(cmd, inputFile, timeout=200):
+def callProgram(cmd, inputFile):
     #     os.chdir("temp")
     #     print(inputFile)
     output = []
     p = subprocess.Popen(cmd,
-                         shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                         shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
     w = threading.Thread(target=run, args=(p, output,))
     last_time = 0
     for line in inputFile:
@@ -103,8 +103,17 @@ def callProgram(cmd, inputFile, timeout=200):
         time.sleep(1)
     w.start()
     p.stdin.close()
-    if p.wait(timeout) != 0:
-        return []
+    try:
+        if p.wait(TIME_LIMIT) != 0:
+            return output
+    except subprocess.TimeoutExpired:
+        p.kill()
+        print("\033[1;31mError: TimeoutExpired: May in the endless loop")
+        return output
+    if p.returncode != 0:
+        print("\033[1;31mError: return code {}\033[0m".format(p.returncode))
+        return output
+
     #     os.chdir("..")
     #     print(output)
     return output
