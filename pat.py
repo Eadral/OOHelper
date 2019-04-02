@@ -108,10 +108,10 @@ def callProgram(cmd, inputFile):
             return output
     except subprocess.TimeoutExpired:
         p.kill()
-        print("\033[1;31mError: TimeoutExpired: May in the endless loop")
+        print("\033[1;31mError: TimeoutExpired: May in the endless loop/wait. Check your 'synchronized'.")
         return output
     if p.returncode != 0:
-        print("\033[1;31mError: return code {}\033[0m".format(p.returncode))
+        print("\033[1;31mError: return code {} is not 0\033[0m".format(p.returncode))
         return output
 
     #     os.chdir("..")
