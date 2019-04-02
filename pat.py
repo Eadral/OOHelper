@@ -85,8 +85,12 @@ def callProgram(cmd, inputFile):
     #     os.chdir("temp")
     #     print(inputFile)
     output = []
-    p = subprocess.Popen(cmd,
-                         shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+    if CLOSE_STDERR:
+        p = subprocess.Popen(cmd,
+                             shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    else:
+        p = subprocess.Popen(cmd,
+                             shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
     w = threading.Thread(target=run, args=(p, output,))
     last_time = 0
     for line in inputFile:
@@ -190,11 +194,23 @@ def check_1_2(intput, output):
     length = len(sequence)
     for i, (mesType, mes) in enumerate(sequence):
         if mesType == "OPEN" and i != 0:
-            if not (float(sequence[i + 1][1][0]) - float(sequence[i][1][0]) > 0.25 - 0.001):
+            index = i + 1
+            while index < len(sequence) and sequence[index][0] != "CLOSE":
+                index += 1
+            diff = 0.25
+            if sequence[index][0] == "CLOSE":
+                diff = 0.5
+            if not (float(sequence[index][1][0]) - float(sequence[i][1][0]) > diff - 0.001):
                 # print(sequence[i + 1], sequence[i])
                 return "The elevator has no enough time to open at {}".format(i)
         if mesType == "CLOSE" and i != length - 1:
-            if not (float(sequence[i][1][0]) - float(sequence[i - 1][1][0]) > 0.25 - 0.001):
+            index = i - 1
+            while index > 0 and sequence[index][0] != "OPEN":
+                index -= 1
+            diff = 0.25
+            if sequence[index][0] == "OPEN":
+                diff = 0.5
+            if not (float(sequence[i][1][0]) - float(sequence[index][1][0]) > diff - 0.001):
                 # print(sequence[i], sequence[i - 1])
                 return "The elevator has no enough time to close at {}".format(i)
     return True

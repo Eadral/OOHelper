@@ -22,7 +22,7 @@ def datacheck(test_data_in):
     basetime = re.search(r'base time is (\d+)', output, re.M)
     maxtime = re.search(r'max time is (\d+)', output, re.M)
     if basetime is None:
-        print("\033Illegal input: {}\033[0m".format(test_data_in))
+        print("\033[1;31mIllegal input: {}\033[0m".format(test_data_in))
         return 0, 0
     return int(basetime.group(1)), int(maxtime.group(1))
 
