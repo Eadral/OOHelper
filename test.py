@@ -89,6 +89,10 @@ def pat_thread(test_data_in, class_path, jar):
 
 
 
+# from test import test, test_single
+# import sys
+# from macro import *
+#
 # if __name__ == "__main__":
 #     jar = ";".join([
 #         r".",
@@ -99,7 +103,7 @@ def pat_thread(test_data_in, class_path, jar):
 #     n_thread = 64  # thread number of evaluator
 #     test_data = r"test_data"
 #
-#
+#     # test_single(n_thread, 1, jar, r"test_data\auto\auto_15541782574642398.in", r"C:\Study\OO\homework\unit2\oo_course_2019_16191051_homework_5", [], "Main", "", ".")
 #     test(n_thread, jar, test_data, r"C:\Study\OO\homework\unit2\oo_course_2019_16191051_homework_5", [], "Main", "", ".")
 #
 #
