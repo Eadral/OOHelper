@@ -104,7 +104,7 @@ def callProgram(cmd, inputFile):
         #         print(write_str)
         p.stdin.write(write_str.encode("UTF-8"))
         p.stdin.flush()
-        time.sleep(1)
+        time.sleep(0.01)
     w.start()
     p.stdin.close()
     try:
@@ -203,16 +203,16 @@ def check_1_2(intput, output):
             if not (float(sequence[index][1][0]) - float(sequence[i][1][0]) > diff - 0.001):
                 # print(sequence[i + 1], sequence[i])
                 return "The elevator has no enough time to open at {}".format(i)
-        if mesType == "CLOSE" and i != length - 1:
-            index = i - 1
-            while index > 0 and sequence[index][0] != "OPEN":
-                index -= 1
-            diff = 0.25
-            if sequence[index][0] == "OPEN":
-                diff = 0.5
-            if not (float(sequence[i][1][0]) - float(sequence[index][1][0]) > diff - 0.001):
-                # print(sequence[i], sequence[i - 1])
-                return "The elevator has no enough time to close at {}".format(i)
+        # if mesType == "CLOSE" and i != length - 1:
+        #     index = i - 1
+        #     while index > 0 and sequence[index][0] != "OPEN":
+        #         index -= 1
+        #     diff = 0.25
+        #     if sequence[index][0] == "OPEN":
+        #         diff = 0.5
+        #     if not (float(sequence[i][1][0]) - float(sequence[index][1][0]) > diff - 0.001):
+        #         # print(sequence[i], sequence[i - 1])
+        #         return "The elevator has no enough time to close at {}".format(i)
     return True
 
 
