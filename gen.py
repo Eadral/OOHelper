@@ -33,7 +33,7 @@ def gen_batch(time, n):
     return batch
 
 
-def save(filename, lines, check):
+def save(filename, lines):
     open(filename, "w").writelines(lines)
     check = datacheck(filename)
     if check[0] == 0:
@@ -63,6 +63,7 @@ if __name__ == "__main__":
     gen_path = r"test_data\auto"
     if not os.path.exists(gen_path):
         os.mkdir(gen_path)
-    n = 100
+    n = 200
     for i in range(n):
         save(os.path.join(gen_path, autoname()), gen(n_batch=5, batch_size=4, time_interval=5))
+

@@ -42,6 +42,7 @@ def test_single(n_thread, times, jar, test_file, project_dir, ignores=None, main
 
 
 def test(n_thread, jar, test_data_folder, project_dir, ignores=None, main="Main", package="", main_path="."):
+    print(project_dir)
     if not os.path.exists("temp"):
         os.mkdir("temp")
     if ignores is None:
