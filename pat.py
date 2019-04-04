@@ -202,7 +202,7 @@ def check_1_2(intput, output):
                 diff = 0.5
             if not (float(sequence[index][1][0]) - float(sequence[i][1][0]) > diff - 0.001):
                 # print(sequence[i + 1], sequence[i])
-                return "The elevator has no enough time to open at {}".format(i)
+                return "The elevator has no enough time to open/close at {}".format(i)
         # if mesType == "CLOSE" and i != length - 1:
         #     index = i - 1
         #     while index > 0 and sequence[index][0] != "OPEN":
