@@ -63,7 +63,8 @@ if __name__ == "__main__":
     gen_path = r"test_data\auto"
     if not os.path.exists(gen_path):
         os.mkdir(gen_path)
-    n = 200
-    for i in range(n):
-        save(os.path.join(gen_path, autoname()), gen(n_batch=5, batch_size=4, time_interval=5))
+    for time_interval in range(5):
+        n = 20
+        for i in range(n):
+            save(os.path.join(gen_path, autoname()), gen(n_batch=5, batch_size=4, time_interval=time_interval))
 
