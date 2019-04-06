@@ -2,7 +2,7 @@ import re
 import subprocess
 import threading
 import time
-from time import time
+# from time import time
 
 from config import *
 from utils import datacheck
