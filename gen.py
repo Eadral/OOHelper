@@ -48,11 +48,11 @@ def autoname():
 
 def gen(n_batch, batch_size, time_interval=1):
     global id_now
-    assert n_batch * batch_size <= MAX_REQUEST
+    assert n_batch * batch_size <= cfg.MAX_REQUEST
     time = 0
     requests = []
     for i in range(n_batch):
-        assert time < MAX_TIME
+        assert time < cfg.MAX_TIME
         requests += gen_batch(time, batch_size)
         time += time_interval
     return requests
