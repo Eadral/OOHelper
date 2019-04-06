@@ -27,7 +27,7 @@ def pat(test_data_in, class_path, jar):
     passed_time = end - start
 
     output = parseOutput(outputfile)
-
+    # print(outputfile)
     ac = checkAll(input, output)
     t_ac = passed_time < maxtime
     if ac is True and t_ac is True:
@@ -77,7 +77,7 @@ def run(p, output):
         line = p.stdout.readline()
         if not line:
             break
-        #         print(line)
+        # print(line)
         output.append(line.decode().strip())
 
 
@@ -184,7 +184,7 @@ def check_1_1(input, output):
             level.append(int(mes[1]))
     assert len(time) == len(level)
     for i in range(len(time) - 1):
-        if not (time[i + 1] - time[i] > abs(level[i + 1] - level[i]) * 0.5 - 0.001):
+        if not (time[i + 1] - time[i] > abs(level[i + 1] - level[i]) * LEVEL_TIME - 0.001):
             return "The elevator has no enough time to move such far distance at {}".format(i)
     return True
 
@@ -197,9 +197,9 @@ def check_1_2(intput, output):
             index = i + 1
             while index < len(sequence) and sequence[index][0] != "CLOSE":
                 index += 1
-            diff = 0.25
+            diff = DOOR_TIME
             if sequence[index][0] == "CLOSE":
-                diff = 0.5
+                diff = DOOR_TIME * 2
             if not (float(sequence[index][1][0]) - float(sequence[i][1][0]) > diff - 0.001):
                 # print(sequence[i + 1], sequence[i])
                 return "The elevator has no enough time to open/close at {}".format(i)
