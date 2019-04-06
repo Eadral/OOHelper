@@ -92,19 +92,28 @@ def pat_thread(test_data_in, class_path, jar):
 
 # from test import test, test_single
 # import sys
-# from macro import *
+# from config import *
 #
 # if __name__ == "__main__":
+#     cfg.CLOSE_STDERR = False
 #     jar = ";".join([
 #         r".",
 #         r"temp",
-#         r"C:\Study\OO\homework\unit2\elevator-input-hw1-1.3-jar-with-dependencies.jar",
+#         r"C:\Study\OO\homework\unit2\elevator-input-hw2-1.3-jar-with-dependencies.jar",
 #         r"C:\Study\OO\homework\unit2\timable-output-1.0-raw-jar-with-dependencies.jar",
 #     ])
-#     n_thread = 64  # thread number of evaluator
+#     n_thread = 128  # thread number of evaluator
 #     test_data = r"test_data"
 #
-#     # test_single(n_thread, 1, jar, r"test_data\auto\auto_15541782574642398.in", r"C:\Study\OO\homework\unit2\oo_course_2019_16191051_homework_5", [], "Main", "", ".")
-#     test(n_thread, jar, test_data, r"C:\Study\OO\homework\unit2\oo_course_2019_16191051_homework_5", [], "Main", "", ".")
+#     # test_single(n_thread, 1, jar, r"test_data\manual\time_late.in", r"C:\Study\OO\homework\unit2\oo_course_2019_16191051_homework_5", [], "Main", "", ".")
+#     test(n_thread, jar, test_data, r"C:\Study\OO\homework\unit2\oo_course_2019_16191051_homework_6", [], "Main", "", ".")
 #
+#
+#     # test(n_thread, jar, test_data, r"C:\Study\OO\others\homework_5\Saber", [], "Test", "", ".")  # passed
+#     # test(n_thread, jar, test_data, r"C:\Study\OO\others\homework_5\Lancer", [], "Main", "", ".")  # passed
+#     # test(n_thread, jar, test_data, r"C:\Study\OO\others\homework_5\Archer", [], "Excutor", "", ".") # passed
+#     # test(n_thread, jar, test_data, r"C:\Study\OO\others\homework_5\Rider", [], "Main", "", ".") # passed
+#     # test(n_thread, jar, test_data, r"C:\Study\OO\others\homework_5\Assassin", [], "FoolMain", "foolthread.", r".\foolthread") # ConcurrentModificationException
+#     # test(n_thread, jar, test_data, r"C:\Study\OO\others\homework_5\Berserker", [], "Scheduler", "", ".") # passed
+#     # test(n_thread, jar, test_data, r"C:\Study\OO\others\homework_5\Alterego", [], "Main", "s.homework1.", r".\s\homework1") # passed
 #

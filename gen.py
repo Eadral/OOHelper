@@ -1,11 +1,11 @@
 import random
-from macro import *
+from config import *
 import time
 import os
 from utils import datacheck
 
-id_now = 1
-
+id_now = 0
+available_level = [-3, -2, -1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
 
 def get_next_id():
     global id_now
@@ -13,10 +13,10 @@ def get_next_id():
     return id_now
 
 
-def gen_level(diff=-1, mi=MIN_LEVEL, ma=MAX_LEVEL):
-    level = random.randint(mi, ma)
+def gen_level(diff=-1):
+    level = random.choice(available_level)
     while level == diff:
-        level = random.randint(mi, ma)
+        level = random.choice(available_level)
     return level
 
 
@@ -48,7 +48,6 @@ def autoname():
 
 def gen(n_batch, batch_size, time_interval=1):
     global id_now
-    id_now = 1
     assert n_batch * batch_size <= MAX_REQUEST
     time = 0
     requests = []
@@ -60,11 +59,15 @@ def gen(n_batch, batch_size, time_interval=1):
 
 
 if __name__ == "__main__":
+    id_now = 0
     gen_path = r"test_data\auto"
+    # print(gen(n_batch=5, batch_size=6, time_interval=30))
+    # exit(0)
     if not os.path.exists(gen_path):
         os.mkdir(gen_path)
-    for time_interval in range(5):
+    for time_interval in range(0, 40, 5):
         n = 20
         for i in range(n):
-            save(os.path.join(gen_path, autoname()), gen(n_batch=5, batch_size=4, time_interval=time_interval))
+            save(os.path.join(gen_path, autoname()), gen(n_batch=5, batch_size=6, time_interval=time_interval))
+
 

@@ -1,13 +1,17 @@
-
-
 class Config:
-    project_dir = None
+    TIME_LIMIT = 200
 
-    def __init__(self, project_dir):
-        self.project_dir = project_dir
+    MIN_LEVEL = 1
+    MAX_LEVEL = 15
+    MAX_REQUEST = 30
+    MAX_TIME = 200
+
+    CLOSE_STDERR = False
+
+    LEVEL_TIME = 0.4
+    DOOR_TIME = 0.2
+
+    EPS = 0.0001
 
 
-
-
-
-
+cfg = Config()

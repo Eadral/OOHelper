@@ -1,5 +1,6 @@
 import os
 import random
+import shutil
 import sys
 import re
 
@@ -17,6 +18,8 @@ def get_paths_recursively(folder):
 
 
 def datacheck(test_data_in):
+    print("\033[1;33mDatacheck unavailable now.\033[0m")
+    return 65535, 65535
     result = os.popen(r"test_data\datacheck.exe -i {}".format(test_data_in))
     output = result.read()
     basetime = re.search(r'base time is (\d+)', output, re.M)
@@ -28,6 +31,9 @@ def datacheck(test_data_in):
 
 
 def precompile(project_dir, main, main_path, jar):
+    if os.path.exists("temp"):
+        shutil.rmtree("temp")
+        os.mkdir("temp")
     class_path = os.path.join("temp", "{}.class".format(main))
     if os.path.exists(class_path):
         os.remove(class_path)

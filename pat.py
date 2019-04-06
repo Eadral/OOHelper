@@ -1,26 +1,19 @@
-import os
-import sys
-from time import time
 import re
 import subprocess
-import os
-import time
-import threading
 import threading
 import time
-import inspect
-import ctypes
-import signal
-from macro import *
+from time import time
+
+from config import *
 from utils import datacheck
 
 
 def pat(test_data_in, class_path, jar):
     inputfile = open(test_data_in).readlines()
-
+    # print("@@@", test_data_in)
     basetime, maxtime = datacheck(test_data_in)
     input = parseInput(inputfile)
-
+    # print("@@@", input)
     start = time.time()
     outputfile = callProgram(r"java -Xmx128m -cp {} {}".format(jar, class_path), inputfile)
     end = time.time()
@@ -35,7 +28,7 @@ def pat(test_data_in, class_path, jar):
             print("\033[1;33mWarning: {}\n\ttime: {}, base_time: {}, max_time: {}\033[0m"
                   .format(test_data_in, passed_time, basetime, maxtime))
             return True
-        print("\033[1;32mPassed: {}\033[0m".format(test_data_in))
+        print("\033[1;32mPassed: {}, time:{}, base_time: {}\033[0m".format(test_data_in, passed_time, basetime))
         return True
     if ac is not True:
         print("\033[1;31mFailed: {}\n\tWA: {}\033[0m".format(test_data_in, ac))
@@ -51,6 +44,7 @@ def checkAll(input, output):
     r_1_3 = check_1_3(input, output)
     r_1_4 = check_1_4(input, output)
     r_2 = check_2(input, output)
+    r_3 = check_3(input, output)
     if r_1_1 is not True:
         return "check_1_1: \n\t" + str(r_1_1) + "\n\t" + str(output)
     if r_1_2 is not True:
@@ -61,13 +55,15 @@ def checkAll(input, output):
         return "check_1_4: \n\t" + str(r_1_4) + "\n\t" + str(output)
     if r_2 is not True:
         return "check_2: \n\t" + str(r_2) + "\n\t" + str(output)
+    if r_3 is not True:
+        return "check_3: \n\t" + str(r_3) + "\n\t" + str(output)
     return True
 
 
 def parseInput(inputfile):
     personRequests = []
     for line in inputfile:
-        result = re.search(r'\[(.*)\](\d+)-FROM-(\d+)-TO-(\d+)', line.strip(), re.M)
+        result = re.search(r'\[(.*)\](-?\d+)-FROM-(-?\d+)-TO-(-?\d+)', line.strip(), re.M)
         personRequests.append(result.groups())
     return personRequests
 
@@ -77,15 +73,16 @@ def run(p, output):
         line = p.stdout.readline()
         if not line:
             break
-        # print(line)
+#         print(line)
         output.append(line.decode().strip())
 
 
 def callProgram(cmd, inputFile):
+    # print(cmd)
     #     os.chdir("temp")
     #     print(inputFile)
     output = []
-    if CLOSE_STDERR:
+    if cfg.CLOSE_STDERR:
         p = subprocess.Popen(cmd,
                              shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     else:
@@ -108,10 +105,11 @@ def callProgram(cmd, inputFile):
     w.start()
     p.stdin.close()
     try:
-        if p.wait(TIME_LIMIT) != 0:
+        if p.wait(cfg.TIME_LIMIT) != 0:
             return output
     except subprocess.TimeoutExpired:
         p.kill()
+        p.terminate()
         print("\033[1;31mError: TimeoutExpired: May in the endless loop/wait. Check your 'synchronized'.")
         return output
     if p.returncode != 0:
@@ -144,30 +142,30 @@ def callProgram(cmd, inputFile):
 
 def parseOutput(inputfile):
     sequence = []
-    IN = []
-    OUT = []
-    OPEN = []
-    CLOSE = []
+#     IN = []
+#     OUT = []
+#     OPEN = []
+#     CLOSE = []
     for line in inputfile:
-        result = re.search(r'\[(.*)\]IN-(\d+)-(\d+)', line.strip(), re.M)
+        result = re.search(r'\[(.*)\]IN-(-?\d+)-(-?\d+)', line.strip(), re.M)
         if result is not None:
             sequence.append(["IN", result.groups()])
-            IN.append(result.groups())
             continue
-        result = re.search(r'\[(.*)\]OUT-(\d+)-(\d+)', line.strip(), re.M)
+        result = re.search(r'\[(.*)\]OUT-(-?\d+)-(-?\d+)', line.strip(), re.M)
         if result is not None:
             sequence.append(["OUT", result.groups()])
-            OUT.append(result.groups())
             continue
-        result = re.search(r'\[(.*)\]OPEN-(\d+)', line.strip(), re.M)
+        result = re.search(r'\[(.*)\]OPEN-(-?\d+)', line.strip(), re.M)
         if result is not None:
             sequence.append(["OPEN", result.groups()])
-            OPEN.append(result.groups())
             continue
-        result = re.search(r'\[(.*)\]CLOSE-(\d+)', line.strip(), re.M)
+        result = re.search(r'\[(.*)\]CLOSE-(-?\d+)', line.strip(), re.M)
         if result is not None:
             sequence.append(["CLOSE", result.groups()])
-            CLOSE.append(result.groups())
+            continue
+        result = re.search(r'\[(.*)\]ARRIVE-(-?\d+)', line.strip(), re.M)
+        if result is not None:
+            sequence.append(["ARRIVE", result.groups()])
             continue
     return sequence
 
@@ -184,7 +182,10 @@ def check_1_1(input, output):
             level.append(int(mes[1]))
     assert len(time) == len(level)
     for i in range(len(time) - 1):
-        if not (time[i + 1] - time[i] > abs(level[i + 1] - level[i]) * LEVEL_TIME - 0.001):
+        estimate_time = abs(level[i + 1] - level[i]) * cfg.LEVEL_TIME
+        if level[i] * level[i + 1] < 0:
+            estimate_time -= cfg.LEVEL_TIME
+        if not (time[i + 1] - time[i] >= estimate_time):
             return "The elevator has no enough time to move such far distance at {}".format(i)
     return True
 
@@ -197,10 +198,10 @@ def check_1_2(intput, output):
             index = i + 1
             while index < len(sequence) and sequence[index][0] != "CLOSE":
                 index += 1
-            diff = DOOR_TIME
+            diff = cfg.DOOR_TIME
             if sequence[index][0] == "CLOSE":
-                diff = DOOR_TIME * 2
-            if not (float(sequence[index][1][0]) - float(sequence[i][1][0]) > diff - 0.001):
+                diff = cfg.DOOR_TIME * 2
+            if not (float(sequence[index][1][0]) - float(sequence[i][1][0]) >= diff):
                 # print(sequence[i + 1], sequence[i])
                 return "The elevator has no enough time to open/close at {}".format(i)
         # if mesType == "CLOSE" and i != length - 1:
@@ -218,7 +219,7 @@ def check_1_2(intput, output):
 
 def getLevel(sequence):
     mesType, mes = sequence
-    if mesType == "OPEN" or mesType == "CLOSE":
+    if mesType in ["OPEN", "CLOSE", "ARRIVE"]:
         return int(mes[1])
     else:
         return int(mes[2])
@@ -239,9 +240,8 @@ def check_1_3(input, output):
     isClosed = True
     for i, (mesType, mes) in enumerate(sequence):
         if i != 1 and not isClosed and (getLevel(sequence[i - 1]) != getLevel(sequence[i])):
-            print(sequence[i - 1], sequence[i])
+            # print(sequence[i - 1], sequence[i])
             return "The elevator is open at {} while you want it move".format(i)
-
         if mesType == "OPEN":
             isClosed = False
         if mesType == "CLOSE":
@@ -263,6 +263,28 @@ def check_1_4(input, output):
         return "Elevator is not closed at the end."
     return True
 
+def check_3(input, output):
+    sequence = output
+    levelNow = 1
+    arrivalTime = 0
+    for i, (mesType, mes) in enumerate(sequence):
+        if mesType == "ARRIVE":
+            level = getLevel(sequence[i])
+            if level in [0]:
+                return "Bad arrive 0 at {}".format(i)
+            time = getTime(sequence[i])
+            if levelNow in [-1, 1]:
+                if not 0 < abs(levelNow - level) <= 2:
+                    return "Bad arrive 0 at {}".format(i)
+            else:
+                if not 0 < abs(levelNow - level) <= 1:
+#                     print(levelNow, level)
+                    return "Bad arrive at {}".format(i)
+            if not abs(arrivalTime - time) >= 0.4:
+                return "Bad arrive at {}".format(i)
+            arrivalTime = time
+            levelNow = level
+    return True
 
 def check_2(input, output):
     id_now = {}
