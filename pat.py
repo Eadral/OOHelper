@@ -185,8 +185,8 @@ def check_1_1(input, output):
         estimate_time = abs(level[i + 1] - level[i]) * cfg.LEVEL_TIME
         if level[i] * level[i + 1] < 0:
             estimate_time -= cfg.LEVEL_TIME
-        if not (time[i + 1] - time[i] >= estimate_time):
-            return "The elevator has no enough time to move such far distance at {}： {}".format(i, [sequence[i-1], sequence[i], sequence[i+1]])
+        if not (time[i + 1] - time[i] >= estimate_time - cfg.EPS):
+            return "The elevator has no enough time to move such far distance at {}： {}. {}, {}".format(i, [sequence[i-1], sequence[i], sequence[i+1]], time[i + 1] - time[i], estimate_time - cfg.EPS)
     return True
 
 
