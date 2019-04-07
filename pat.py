@@ -280,7 +280,7 @@ def check_3(input, output):
                 if not 0 < abs(levelNow - level) <= 1:
 #                     print(levelNow, level)
                     return "Bad arrive at {}： {}".format(i, [sequence[-1], sequence[i], sequence[i+1]])
-            if not abs(arrivalTime - time) >= 0.4:
+            if not abs(arrivalTime - time) >= 0.4 - cfg.EPS:
                 return "Bad arrive at {}： {}".format(i, [sequence[-1], sequence[i], sequence[i+1]])
             arrivalTime = time
             levelNow = level
