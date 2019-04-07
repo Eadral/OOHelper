@@ -15,7 +15,7 @@ def pat(test_data_in, class_path, jar):
     input = parseInput(inputfile)
     # print("@@@", input)
     start = time.time()
-    outputfile = callProgram(r"java -Xmx128m -cp {} {}".format(jar, class_path), inputfile)
+    outputfile = callProgram(r"java -Xmx128m -cp {} {} {}".format(jar, class_path, test_data_in), inputfile)
     end = time.time()
     passed_time = end - start
 

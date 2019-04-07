@@ -18,8 +18,8 @@ def get_paths_recursively(folder):
 
 
 def datacheck(test_data_in):
-    print("\033[1;33mDatacheck unavailable now.\033[0m")
-    return 65535, 65535
+    # print("\033[1;33mDatacheck unavailable now.\033[0m")
+    # return 65535, 65535
     result = os.popen(r"test_data\datacheck.exe -i {}".format(test_data_in))
     output = result.read()
     basetime = re.search(r'base time is (\d+)', output, re.M)
