@@ -186,7 +186,7 @@ def check_1_1(input, output):
         if level[i] * level[i + 1] < 0:
             estimate_time -= cfg.LEVEL_TIME
         if not (time[i + 1] - time[i] >= estimate_time):
-            return "The elevator has no enough time to move such far distance at {}".format(i)
+            return "The elevator has no enough time to move such far distance at {}： {}".format(i, [sequence[i-1], sequence[i], sequence[i+1]])
     return True
 
 
@@ -203,7 +203,7 @@ def check_1_2(intput, output):
                 diff = cfg.DOOR_TIME * 2
             if not (float(sequence[index][1][0]) - float(sequence[i][1][0]) >= diff):
                 # print(sequence[i + 1], sequence[i])
-                return "The elevator has no enough time to open/close at {}".format(i)
+                return "The elevator has no enough time to open/close at {}： {}".format(i, [sequence[index], sequence[i], sequence[i+1]])
         # if mesType == "CLOSE" and i != length - 1:
         #     index = i - 1
         #     while index > 0 and sequence[index][0] != "OPEN":
@@ -241,7 +241,7 @@ def check_1_3(input, output):
     for i, (mesType, mes) in enumerate(sequence):
         if i != 1 and not isClosed and (getLevel(sequence[i - 1]) != getLevel(sequence[i])):
             # print(sequence[i - 1], sequence[i])
-            return "The elevator is open at {} while you want it move".format(i)
+            return "The elevator is open at {} while you want it move： {}".format(i, [sequence[i-1], sequence[i], sequence[i+1]])
         if mesType == "OPEN":
             isClosed = False
         if mesType == "CLOSE":
@@ -254,7 +254,7 @@ def check_1_4(input, output):
     isOpen = False
     for i, (mesType, mes) in enumerate(sequence):
         if not isOpen and (mesType == "IN" or mesType == "OUT"):
-            return "The elevator is closed at {} while you want someone in/out.".format(i)
+            return "The elevator is closed at {} while you want someone in/out： {}".format(i, [sequence[i-1], sequence[i], sequence[i+1]])
         if mesType == "OPEN":
             isOpen = True
         if mesType == "CLOSE":
@@ -271,17 +271,17 @@ def check_3(input, output):
         if mesType == "ARRIVE":
             level = getLevel(sequence[i])
             if level in [0]:
-                return "Bad arrive 0 at {}".format(i)
+                return "Bad arrive 0 at {}： {}".format(i, [sequence[-1], sequence[i], sequence[i+1]])
             time = getTime(sequence[i])
             if levelNow in [-1, 1]:
                 if not 0 < abs(levelNow - level) <= 2:
-                    return "Bad arrive 0 at {}".format(i)
+                    return "Bad arrive 0 at {}： {}".format(i, [sequence[-1], sequence[i], sequence[i+1]])
             else:
                 if not 0 < abs(levelNow - level) <= 1:
 #                     print(levelNow, level)
-                    return "Bad arrive at {}".format(i)
+                    return "Bad arrive at {}： {}".format(i, [sequence[-1], sequence[i], sequence[i+1]])
             if not abs(arrivalTime - time) >= 0.4:
-                return "Bad arrive at {}".format(i)
+                return "Bad arrive at {}： {}".format(i, [sequence[-1], sequence[i], sequence[i+1]])
             arrivalTime = time
             levelNow = level
     return True
