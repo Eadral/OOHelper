@@ -201,7 +201,7 @@ def check_1_2(intput, output):
             diff = cfg.DOOR_TIME
             if sequence[index][0] == "CLOSE":
                 diff = cfg.DOOR_TIME * 2
-            if not (float(sequence[index][1][0]) - float(sequence[i][1][0]) >= diff):
+            if not (float(sequence[index][1][0]) - float(sequence[i][1][0]) >= diff) - cfg.EPS:
                 # print(sequence[i + 1], sequence[i])
                 return "The elevator has no enough time to open/close at {}： {}".format(i, [sequence[index], sequence[i], sequence[i+1]])
         # if mesType == "CLOSE" and i != length - 1:
