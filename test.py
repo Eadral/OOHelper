@@ -98,18 +98,19 @@ def pat_thread(test_data_in, class_path, jar):
 # from config import *
 #
 # if __name__ == "__main__":
-#     cfg.CLOSE_STDERR = False
+#     # cfg.EPS = 0.1
 #     jar = ";".join([
 #         r".",
 #         r"temp",
 #         r"C:\Study\OO\homework\unit2\elevator-input-hw2-1.3-jar-with-dependencies.jar",
 #         r"C:\Study\OO\homework\unit2\timable-output-1.0-raw-jar-with-dependencies.jar",
 #     ])
-#     n_thread = 128  # thread number of evaluator
-#     test_data = r"test_data"
+#     n_thread = 64  # thread number of evaluator
+#     number = -1
+#     test_data = r"test_data\auto"
 #
-#     # test_single(n_thread, 1, jar, r"test_data\manual\time_late.in", r"C:\Study\OO\homework\unit2\oo_course_2019_16191051_homework_5", [], "Main", "", ".")
-#     test(n_thread, jar, test_data, r"C:\Study\OO\homework\unit2\oo_course_2019_16191051_homework_6", [], "Main", "", ".")
+#     # test_single(n_thread, 1, jar, r"test_data\manual\x.in", r"C:\Study\OO\homework\unit2\oo_course_2019_16191051_homework_6", [], "Main", "", ".")
+#     test(n_thread, number, jar, test_data, r"C:\Study\OO\homework\unit2\oo_course_2019_16191051_homework_6", [], "Main", "", ".")
 #
 #
 #     # test(n_thread, jar, test_data, r"C:\Study\OO\others\homework_5\Saber", [], "Test", "", ".")  # passed

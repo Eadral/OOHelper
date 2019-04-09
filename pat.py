@@ -34,8 +34,8 @@ def pat(test_data_in, class_path, jar):
         print("\033[1;31mFailed: {}\n\tWA: {}\033[0m".format(test_data_in, ac))
         return False
     if t_ac is not True:
-        print("\033[1;31mFailed: {}\n\tTLE: {}, max_time: {}\033[0m".format(test_data_in, passed_time, maxtime))
-        return False
+        print("\033[1;31mWarning: {}\n\tTLE: {}, max_time: {}\033[0m".format(test_data_in, passed_time, maxtime))
+        return True
 
 
 def checkAll(input, output):
