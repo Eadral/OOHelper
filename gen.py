@@ -35,11 +35,11 @@ def gen_batch(time, n):
 
 def save(filename, lines):
     open(filename, "w").writelines(lines)
-    check = datacheck(filename)
-    if check[0] == 0:
-        os.remove(filename)
-        return
-    print("Generated: {}  base_time: {}, max_time: {}".format(filename, check[0], check[1]))
+    # check = datacheck(filename)
+    # if check[0] == 0:
+    #     os.remove(filename)
+    #     return
+    print("Generated: {} ".format(filename))
 
 
 def autoname():
