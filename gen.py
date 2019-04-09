@@ -66,7 +66,7 @@ if __name__ == "__main__":
     if not os.path.exists(gen_path):
         os.mkdir(gen_path)
     for time_interval in range(0, 30, 5):
-        n = 20
+        n = 50
         for i in range(n):
             save(os.path.join(gen_path, autoname()), gen(n_batch=5, batch_size=6, time_interval=time_interval))
 

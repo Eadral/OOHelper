@@ -41,7 +41,7 @@ def test_single(n_thread, times, jar, test_file, project_dir, ignores=None, main
         print("\033[1;32mAC {}/{}\033[0m".format(pass_num, times))
 
 
-def test(n_thread, jar, test_data_folder, project_dir, ignores=None, main="Main", package="", main_path="."):
+def test(n_thread, number, jar, test_data_folder, project_dir, ignores=None, main="Main", package="", main_path="."):
     print(project_dir)
     if not os.path.exists("temp"):
         os.mkdir("temp")
@@ -53,6 +53,9 @@ def test(n_thread, jar, test_data_folder, project_dir, ignores=None, main="Main"
     # test_data_folder = os.path.join(project_dir, "test_data")
     test_data_paths = get_paths_recursively(test_data_folder)
     test_data_in_paths = list(filter(lambda path: path.split('.')[-1] == "in", test_data_paths))
+    random.shuffle(test_data_in_paths)
+    if number != -1:
+        test_data_in_paths = test_data_in_paths[:number]
 
     p_list = []
     with ThreadPoolExecutor(n_thread) as executor:

@@ -12,3 +12,4 @@ temp/
 *.jar
 test_data/auto/
 main.py
+demo.py
