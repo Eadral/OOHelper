@@ -8,7 +8,7 @@ from config import *
 from utils import datacheck
 
 
-def pat(test_data_in, class_path, jar):
+def pat(test_data_in, class_path, jar, prt=False):
     inputfile = open(test_data_in).readlines()
     # print("@@@", test_data_in)
     basetime, maxtime = datacheck(test_data_in)
@@ -20,6 +20,9 @@ def pat(test_data_in, class_path, jar):
     passed_time = end - start
 
     output = parseOutput(outputfile)
+    if prt:
+        for line in outputfile:
+            print(line)
     # print(outputfile)
     ac = checkAll(input, output)
     t_ac = passed_time < maxtime

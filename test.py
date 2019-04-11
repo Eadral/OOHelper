@@ -22,7 +22,7 @@ def test_single(n_thread, times, jar, test_file, project_dir, ignores=None, main
     p_list = []
     with ThreadPoolExecutor(n_thread) as executor:
         for i in range(times):
-            child = executor.submit(pat_thread, test_file, package + main, jar)
+            child = executor.submit(pat_thread, test_file, package + main, jar, True)
             p_list.append(child)
             # if pat(test_data_in, package + main, jar, timeout):
             #     pass_num += 1
@@ -42,6 +42,10 @@ def test_single(n_thread, times, jar, test_file, project_dir, ignores=None, main
 
 
 def test(n_thread, number, jar, test_data_folder, project_dir, ignores=None, main="Main", package="", main_path="."):
+    global failed
+    failed = []
+    global pass_num
+    pass_num = 0
     print(project_dir)
     if not os.path.exists("temp"):
         os.mkdir("temp")
@@ -72,7 +76,6 @@ def test(n_thread, number, jar, test_data_folder, project_dir, ignores=None, mai
     #     print(p.done())
     #
     time.sleep(0.01)
-    global pass_num
 
     if len(failed) != 0:
         print("\033[1;33mAC {}/{}\033[0m".format(pass_num, len(test_data_in_paths)))
@@ -81,11 +84,11 @@ def test(n_thread, number, jar, test_data_folder, project_dir, ignores=None, mai
         print("\033[1;32mAC {}/{}\033[0m".format(pass_num, len(test_data_in_paths)))
 
 
-def pat_thread(test_data_in, class_path, jar):
+def pat_thread(test_data_in, class_path, jar, prt=False):
     global failed
     global pass_num
     print("\033[1;37mTesting: {}\033[0m".format(test_data_in))
-    result = pat(test_data_in, class_path, jar)
+    result = pat(test_data_in, class_path, jar, prt)
     if result is True:
         pass_num += 1
     else:
