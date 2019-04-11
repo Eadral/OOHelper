@@ -60,7 +60,7 @@ def gen(n_batch, batch_size, time_interval=1):
 
 if __name__ == "__main__":
     id_now = 0
-    gen_path = r"test_data\auto"
+    gen_path = os.path.join("test_data", "auto")
     # print(gen(n_batch=5, batch_size=6, time_interval=30))
     # exit(0)
     if not os.path.exists(gen_path):
