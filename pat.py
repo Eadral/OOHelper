@@ -27,7 +27,7 @@ def pat(test_data_in, class_path, jar, prt=False):
     ac = checkAll(inputfile, outputfile)
     t_ac = passed_time < maxtime
     if ac is True and t_ac is True:
-        if passed_time > basetime + 10:
+        if passed_time > basetime + 20:
             print("\033[1;33mWarning: {}, time:{}, base_time: {}\033[0m"
                   .format(test_data_in, passed_time, basetime, maxtime))
             return True, passed_time
