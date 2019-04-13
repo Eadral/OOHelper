@@ -63,5 +63,5 @@ def random_range(range):
     return random.random() * range + 1 - range
 
 
-# Please use pseudo256 and pseudo512 dataset in order to get a standard time measurement
+# Use pseudo256 and pseudo512 dataset in order to get a standard time measurement
 
