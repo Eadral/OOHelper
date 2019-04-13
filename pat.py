@@ -5,62 +5,40 @@ import time
 # from time import time
 
 from config import *
-from utils import datacheck
+from utils import *
 
 
 def pat(test_data_in, class_path, jar, prt=False):
     inputfile = open(test_data_in).readlines()
     # print("@@@", test_data_in)
     basetime, maxtime = datacheck(test_data_in)
-    input = parseInput(inputfile)
+    # input = parseInput(inputfile)
     # print("@@@", input)
     start = time.time()
     outputfile = callProgram(r"java -Xmx128m -cp {} {} {}".format(jar, class_path, test_data_in), inputfile)
     end = time.time()
     passed_time = end - start
 
-    output = parseOutput(outputfile)
+    # output = parseOutput(outputfile)
     if prt:
         for line in outputfile:
             print(line)
     # print(outputfile)
-    ac = checkAll(input, output)
+    ac = checkAll(inputfile, outputfile)
     t_ac = passed_time < maxtime
     if ac is True and t_ac is True:
         if passed_time > basetime + 1:
             print("\033[1;33mWarning: {}\n\ttime: {}, base_time: {}, max_time: {}\033[0m"
                   .format(test_data_in, passed_time, basetime, maxtime))
-            return True
+            return True, passed_time
         print("\033[1;32mPassed: {}, time:{}, base_time: {}\033[0m".format(test_data_in, passed_time, basetime))
-        return True
+        return True, passed_time
     if ac is not True:
         print("\033[1;31mFailed: {}\n\tWA: {}\033[0m".format(test_data_in, ac))
-        return False
+        return False, passed_time
     if t_ac is not True:
         print("\033[1;31mWarning: {}\n\tTLE: {}, max_time: {}\033[0m".format(test_data_in, passed_time, maxtime))
-        return True
-
-
-def checkAll(input, output):
-    r_1_1 = check_1_1(input, output)
-    r_1_2 = check_1_2(input, output)
-    r_1_3 = check_1_3(input, output)
-    r_1_4 = check_1_4(input, output)
-    r_2 = check_2(input, output)
-    r_3 = check_3(input, output)
-    if r_1_1 is not True:
-        return "check_1_1: \n\t" + str(r_1_1) + "\n\t" + str(output)
-    if r_1_2 is not True:
-        return "check_1_2: \n\t" + str(r_1_2) + "\n\t" + str(output)
-    if r_1_3 is not True:
-        return "check_1_3: \n\t" + str(r_1_3) + "\n\t" + str(output)
-    if r_1_4 is not True:
-        return "check_1_4: \n\t" + str(r_1_4) + "\n\t" + str(output)
-    if r_2 is not True:
-        return "check_2: \n\t" + str(r_2) + "\n\t" + str(output)
-    if r_3 is not True:
-        return "check_3: \n\t" + str(r_3) + "\n\t" + str(output)
-    return True
+        return True, passed_time
 
 
 def parseInput(inputfile):
@@ -123,25 +101,24 @@ def callProgram(cmd, inputFile):
     #     print(output)
     return output
 
-
-# def _async_raise(tid, exctype):
-#     """raises the exception, performs cleanup if needed"""
-#     tid = ctypes.c_long(tid)
-#     if not inspect.isclass(exctype):
-#         exctype = type(exctype)
-#     res = ctypes.pythonapi.PyThreadState_SetAsyncExc(tid, ctypes.py_object(exctype))
-#     if res == 0:
-#         raise ValueError("invalid thread id")
-#     elif res != 1:
-#         # """if it returns a number greater than one, you're in trouble,
-#         # and you should call it again with exc=NULL to revert the effect"""
-#         ctypes.pythonapi.PyThreadState_SetAsyncExc(tid, None)
-#         raise SystemError("PyThreadState_SetAsyncExc failed")
-#
-#
-# def stop_thread(thread):
-#     _async_raise(thread.ident, SystemExit)
-
+def parseOutputABC(inputfile):
+    sequenceA = []
+    sequenceB = []
+    sequenceC = []
+    for line in inputfile:
+        result = re.search(r'-A', line.strip(), re.M)
+        if result is not None:
+            sequenceA.append(line)
+            continue
+        result = re.search(r'-B', line.strip(), re.M)
+        if result is not None:
+            sequenceB.append(line)
+            continue
+        result = re.search(r'-C', line.strip(), re.M)
+        if result is not None:
+            sequenceC.append(line)
+            continue
+    return sequenceA, sequenceB, sequenceC
 
 def parseOutput(inputfile):
     sequence = []
@@ -301,9 +278,13 @@ def check_2(input, output):
     #     print(id_now)
     sequence = output
     for i, (mesType, mes) in enumerate(sequence):
+#         print(id_now)
         #         print(sequence[i])
         if mesType == "IN":
             thisID = getId(sequence[i])
+            level = getLevel(sequence[i])
+            if level != id_now[thisID]:
+                return "{} is not at floor {} while you want the guy in.".format(thisID, level)
             del id_now[thisID]
             if thisID in ele:
                 return "{} has been in the elevator at {} while you want the guy in again.".format(thisID, i)
@@ -319,4 +300,47 @@ def check_2(input, output):
     for id_ in id_set:
         if id_now[int(id_)] != id_to[int(id_)]:
             return "{} in the wrong floor at the end.".format(id_)
+    return True
+
+
+def checkAllSequence(input, output):
+    r_1_1 = check_1_1(input, output)
+    r_1_2 = check_1_2(input, output)
+    r_1_3 = check_1_3(input, output)
+    r_1_4 = check_1_4(input, output)
+#     r_2 = check_2(input, output)
+    r_3 = check_3(input, output)
+    if r_1_1 is not True:
+        return "check_1_1: \n\t" + str(r_1_1) + "\n\t" + str(output)
+    if r_1_2 is not True:
+        return "check_1_2: \n\t" + str(r_1_2) + "\n\t" + str(output)
+    if r_1_3 is not True:
+        return "check_1_3: \n\t" + str(r_1_3) + "\n\t" + str(output)
+    if r_1_4 is not True:
+        return "check_1_4: \n\t" + str(r_1_4) + "\n\t" + str(output)
+#     if r_2 is not True:
+#         return "check_2: \n\t" + str(r_2) + "\n\t" + str(output)
+    if r_3 is not True:
+        return "check_3: \n\t" + str(r_3) + "\n\t" + str(output)
+    return True
+
+def checkAll(inputfile, outputfile):
+    input = parseInput(inputfile)
+    sequenceAll = parseOutput(outputfile)
+    sequenceA, sequenceB, sequenceC = parseOutputABC(outputfile)
+    outputSequenceA = parseOutput(sequenceA)
+    outputSequenceB = parseOutput(sequenceB)
+    outputSequenceC = parseOutput(sequenceC)
+    r_A = checkAllSequence(input, outputSequenceA)
+    r_B = checkAllSequence(input, outputSequenceB)
+    r_C = checkAllSequence(input, outputSequenceC)
+    r_All = check_2(input, sequenceAll)
+    if r_A is not True:
+        return "Error Elevator A: " + str(r_A)
+    if r_B is not True:
+        return "Error Elevator B: " + str(r_B)
+    if r_C is not True:
+        return "Error Elevator C: " + str(r_C)
+    if r_All is not True:
+        return r_All
     return True

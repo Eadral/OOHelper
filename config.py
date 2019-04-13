@@ -1,9 +1,9 @@
 class Config:
     TIME_LIMIT = 200
 
-    MIN_LEVEL = 1
-    MAX_LEVEL = 15
-    MAX_REQUEST = 30
+    MIN_LEVEL = -3
+    MAX_LEVEL = 20
+    MAX_REQUEST = 50
     MAX_TIME = 200
 
     CLOSE_STDERR = True

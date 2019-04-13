@@ -4,10 +4,11 @@ from utils import precompile
 # import progressbar
 import time
 from concurrent.futures import ThreadPoolExecutor, wait
+import sqlite3
 
 failed = []
 pass_num = 0
-
+times = []
 
 def test_single(n_thread, times, jar, test_file, project_dir, ignores=None, main="Main", package="", main_path="."):
     if not os.path.exists("temp"):
@@ -39,9 +40,12 @@ def test_single(n_thread, times, jar, test_file, project_dir, ignores=None, main
         print("\033[1;31mFailed:", failed)
     else:
         print("\033[1;32mAC {}/{}\033[0m".format(pass_num, times))
+    conn.commit()
 
 
 def test(n_thread, number, jar, test_data_folder, project_dir, ignores=None, main="Main", package="", main_path="."):
+    global times
+    times = []
     global failed
     failed = []
     global pass_num
@@ -83,14 +87,21 @@ def test(n_thread, number, jar, test_data_folder, project_dir, ignores=None, mai
     else:
         print("\033[1;32mAC {}/{}\033[0m".format(pass_num, len(test_data_in_paths)))
 
+    print("\033[1;32mAverage Time: {}\033[0m".format(sum(times) / len(times)))
+    conn.commit()
+
 
 def pat_thread(test_data_in, class_path, jar, prt=False):
     global failed
     global pass_num
+    global times
     print("\033[1;37mTesting: {}\033[0m".format(test_data_in))
     result = pat(test_data_in, class_path, jar, prt)
-    if result is True:
+    if result[0] is True:
         pass_num += 1
+        # print(test_data_in)
+        update_time(test_data_in, result[1])
+        times.append(result[1])
     else:
         failed.append(test_data_in)
 
