@@ -63,19 +63,22 @@ def random_range(range):
     return random.random() * range + 1 - range
 
 
+#
 # Use pseudo256 and pseudo512 dataset in order to get a standard time measurement
+#
 
-if __name__ == "__main__":
-    id_now = 0
-    gen_path = os.path.join("test_data", "auto")
-    # print(gen(n_batch=5, batch_size=6, time_interval=30))
-    # exit(0)
-    if not os.path.exists(gen_path):
-        os.mkdir(gen_path)
 
-    n = 256
-    for i in range(n):
-        save(os.path.join(gen_path, autoname()), gen(n_batch=40, batch_size=1, time_interval=1.0))
-    # gen(n_batch=40, batch_size=1, time_interval=0.1)
+# if __name__ == "__main__":
+#     id_now = 0
+#     gen_path = os.path.join("test_data", "auto")
+#     # print(gen(n_batch=5, batch_size=6, time_interval=30))
+#     # exit(0)
+#     if not os.path.exists(gen_path):
+#         os.mkdir(gen_path)
+#
+#     n = 256
+#     for i in range(n):
+#         save(os.path.join(gen_path, autoname()), gen(n_batch=40, batch_size=1, time_interval=1.0))
+#     # gen(n_batch=40, batch_size=1, time_interval=0.1)
 
 
