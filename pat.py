@@ -27,8 +27,8 @@ def pat(test_data_in, class_path, jar, prt=False):
     ac = checkAll(inputfile, outputfile)
     t_ac = passed_time < maxtime
     if ac is True and t_ac is True:
-        if passed_time > basetime + 1:
-            print("\033[1;33mWarning: {}\n\ttime: {}, base_time: {}, max_time: {}\033[0m"
+        if passed_time > basetime + 10:
+            print("\033[1;33mWarning: {}, time:{}, base_time: {}\033[0m"
                   .format(test_data_in, passed_time, basetime, maxtime))
             return True, passed_time
         print("\033[1;32mPassed: {}, time:{}, base_time: {}\033[0m".format(test_data_in, passed_time, basetime))
@@ -283,7 +283,7 @@ def check_2(input, output):
         if mesType == "IN":
             thisID = getId(sequence[i])
             level = getLevel(sequence[i])
-            if level != id_now[thisID]:
+            if (thisID not in id_now) or (level != id_now[thisID]):
                 return "{} is not at floor {} while you want the guy in.".format(thisID, level)
             del id_now[thisID]
             if thisID in ele:
@@ -336,11 +336,11 @@ def checkAll(inputfile, outputfile):
     r_C = checkAllSequence(input, outputSequenceC)
     r_All = check_2(input, sequenceAll)
     if r_A is not True:
-        return "Error Elevator A: " + str(r_A)
+        return "Error Elevator A: " + str(r_A) + "\n\t" + str(outputfile)
     if r_B is not True:
-        return "Error Elevator B: " + str(r_B)
+        return "Error Elevator B: " + str(r_B) + "\n\t" + str(outputfile)
     if r_C is not True:
-        return "Error Elevator C: " + str(r_C)
+        return "Error Elevator C: " + str(r_C) + "\n\t" + str(outputfile)
     if r_All is not True:
-        return r_All
+        return r_All + "\n\t" + str(outputfile)
     return True

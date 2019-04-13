@@ -26,7 +26,7 @@ def get_paths_recursively(folder):
 def datacheck(test_data_in):
     # print(test_data_in)
     time = get_time(test_data_in)
-    return time, time + 3
+    return time, 200
     # print("\033[1;33mDatacheck unavailable now.\033[0m")
     # return 65535, 65535
     # result = os.popen(r"{} -i {}".format(os.path.join("test_data", "datacheck.exe"), test_data_in))
@@ -64,27 +64,27 @@ def compile_source(src, main_path=".", jar=".;"):
     os.chdir(here)
 
 
-mutex = threading.Lock()
+db_mutex = threading.Lock()
 
 
 def insert(name, time):
-    mutex.acquire()
+    db_mutex.acquire()
     cur.execute(r"insert into datacheck (name, time) values ('{}', {})".format(name, time))
-    mutex.release()
+    db_mutex.release()
 
 
 def select(name):
-    mutex.acquire()
+    db_mutex.acquire()
     cur.execute("select * from datacheck where name = '{}'".format(name))
     r = cur.fetchall()
-    mutex.release()
+    db_mutex.release()
     return r
 
 
 def delete(name):
-    mutex.acquire()
+    db_mutex.acquire()
     cur.execute("delete from datacheck where name = '{}'".format(name))
-    mutex.release()
+    db_mutex.release()
 
 
 def get_time(filename):

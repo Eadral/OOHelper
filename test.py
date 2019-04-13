@@ -5,6 +5,9 @@ from utils import precompile
 import time
 from concurrent.futures import ThreadPoolExecutor, wait
 import sqlite3
+import threading
+
+thread_mutex = threading.Lock()
 
 failed = []
 pass_num = 0
@@ -72,10 +75,15 @@ def test(n_thread, number, jar, test_data_folder, project_dir, ignores=None, mai
                 continue
             child = executor.submit(pat_thread, test_data_in, package + main, jar)
             p_list.append(child)
+
             # if pat(test_data_in, package + main, jar, timeout):
             #     pass_num += 1
             #     print("Passed: {}".format(test_data_in))
     wait(p_list)
+    for p in p_list:
+        if p.result() is not None:
+            print(p.result())
+
     # for p in p_list:
     #     print(p.done())
     #
@@ -97,6 +105,7 @@ def pat_thread(test_data_in, class_path, jar, prt=False):
     global times
     print("\033[1;37mTesting: {}\033[0m".format(test_data_in))
     result = pat(test_data_in, class_path, jar, prt)
+    thread_mutex.acquire()
     if result[0] is True:
         pass_num += 1
         # print(test_data_in)
@@ -104,6 +113,7 @@ def pat_thread(test_data_in, class_path, jar, prt=False):
         times.append(result[1])
     else:
         failed.append(test_data_in)
+    thread_mutex.release()
 
 
 
