@@ -150,7 +150,7 @@ def parseOutput(inputfile):
     return sequence
 
 
-def check_1_1(input, output):
+def check_1_1(input, output, eId):
     sequence = output
     time = []
     level = []
@@ -162,15 +162,15 @@ def check_1_1(input, output):
             level.append(int(mes[1]))
     assert len(time) == len(level)
     for i in range(len(time) - 1):
-        estimate_time = abs(level[i + 1] - level[i]) * cfg.LEVEL_TIME
+        estimate_time = abs(level[i + 1] - level[i]) * cfg.LEVEL_TIME[eId]
         if level[i] * level[i + 1] < 0:
-            estimate_time -= cfg.LEVEL_TIME
+            estimate_time -= cfg.LEVEL_TIME[eId]
         if not (time[i + 1] - time[i] >= estimate_time - cfg.EPS):
             return "The elevator has no enough time to move such far distance at {}： {}. {}, {}".format(i, [sequence[i-1], sequence[i], sequence[i+1]], time[i + 1] - time[i], estimate_time - cfg.EPS)
     return True
 
 
-def check_1_2(intput, output):
+def check_1_2(intput, output, eId):
     sequence = output
     length = len(sequence)
     for i, (mesType, mes) in enumerate(sequence):
@@ -215,7 +215,7 @@ def getId(sequence):
     return int(mes[1])
 
 
-def check_1_3(input, output):
+def check_1_3(input, output, eId):
     sequence = output
     isClosed = True
     for i, (mesType, mes) in enumerate(sequence):
@@ -229,7 +229,7 @@ def check_1_3(input, output):
     return True
 
 
-def check_1_4(input, output):
+def check_1_4(input, output, eId):
     sequence = output
     isOpen = False
     for i, (mesType, mes) in enumerate(sequence):
@@ -243,7 +243,7 @@ def check_1_4(input, output):
         return "Elevator is not closed at the end."
     return True
 
-def check_3(input, output):
+def check_3(input, output, eId):
     sequence = output
     levelNow = 1
     arrivalTime = 0
@@ -303,13 +303,13 @@ def check_2(input, output):
     return True
 
 
-def checkAllSequence(input, output):
-    r_1_1 = check_1_1(input, output)
-    r_1_2 = check_1_2(input, output)
-    r_1_3 = check_1_3(input, output)
-    r_1_4 = check_1_4(input, output)
+def checkAllSequence(input, output, eId):
+    r_1_1 = check_1_1(input, output, eId)
+    r_1_2 = check_1_2(input, output, eId)
+    r_1_3 = check_1_3(input, output, eId)
+    r_1_4 = check_1_4(input, output, eId)
 #     r_2 = check_2(input, output)
-    r_3 = check_3(input, output)
+    r_3 = check_3(input, output, eId)
     if r_1_1 is not True:
         return "check_1_1: \n\t" + str(r_1_1) + "\n\t" + str(output)
     if r_1_2 is not True:
@@ -331,9 +331,9 @@ def checkAll(inputfile, outputfile):
     outputSequenceA = parseOutput(sequenceA)
     outputSequenceB = parseOutput(sequenceB)
     outputSequenceC = parseOutput(sequenceC)
-    r_A = checkAllSequence(input, outputSequenceA)
-    r_B = checkAllSequence(input, outputSequenceB)
-    r_C = checkAllSequence(input, outputSequenceC)
+    r_A = checkAllSequence(input, outputSequenceA, "A")
+    r_B = checkAllSequence(input, outputSequenceB, "A")
+    r_C = checkAllSequence(input, outputSequenceC, "A")
     r_All = check_2(input, sequenceAll)
     if r_A is not True:
         return "Error Elevator A: " + str(r_A) + "\n\t" + str(outputfile)

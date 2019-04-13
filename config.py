@@ -8,7 +8,16 @@ class Config:
 
     CLOSE_STDERR = True
 
-    LEVEL_TIME = 0.4
+    # LEVEL_TIME = 0.4
+    LEVEL_TIME_A = 0.4
+    LEVEL_TIME_B = 0.5
+    LEVEL_TIME_C = 0.6
+    LEVEL_TIME = {
+        "A": 0.4,
+        "B": 0.5,
+        "C": 0.6,
+    }
+
     DOOR_TIME = 0.2
 
     EPS = 0.0001
