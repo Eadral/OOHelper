@@ -238,7 +238,7 @@ def check_1_4(input, output, eId):
             return "The elevator is closed at {} while you want someone in/out： {}".format(i, [sequence[i-1], sequence[i], sequence[i+1]])
         if mesType == "OPEN":
             if isOpen is True:
-                return "The elevator is open {} while you want it open again： {}".format(i, [sequence[i - 1],
+                return "The elevator is open at {} while you want it open again： {}".format(i, [sequence[i - 1],
                                                                                                    sequence[i],
                                                                                                    sequence[i + 1]])
 

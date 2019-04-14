@@ -55,7 +55,7 @@ def gen(n_batch, batch_size, time_interval=1.0):
     for i in range(n_batch):
         assert time < cfg.MAX_TIME
         requests += gen_batch(time, batch_size)
-        time += time_interval * random_range(0.2)
+        time += time_interval * random.random()
     return requests
 
 
@@ -76,9 +76,9 @@ def random_range(range):
 #     if not os.path.exists(gen_path):
 #         os.mkdir(gen_path)
 #
-#     n = 256
+#     n = 512
 #     for i in range(n):
-#         save(os.path.join(gen_path, autoname()), gen(n_batch=40, batch_size=1, time_interval=1.0))
+#         save(os.path.join(gen_path, autoname()), gen(n_batch=40, batch_size=1, time_interval=2.0))
 #     # gen(n_batch=40, batch_size=1, time_interval=0.1)
 
 
