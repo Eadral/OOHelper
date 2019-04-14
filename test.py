@@ -95,7 +95,10 @@ def test(n_thread, number, jar, test_data_folder, project_dir, ignores=None, mai
     else:
         print("\033[1;32mAC {}/{}\033[0m".format(pass_num, len(test_data_in_paths)))
 
-    print("\033[1;32mAverage Time: {}\033[0m".format(sum(times) / len(times)))
+    best_time, _ = datacheck(test_data_folder)
+    average_time = sum(times) / len(times)
+    print("\033[1;32mAverage Time: {}, Best Average Time: {}\033[0m".format(average_time, best_time))
+    update_time(test_data_folder, average_time)
     conn.commit()
 
 
