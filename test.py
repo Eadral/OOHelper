@@ -26,7 +26,7 @@ def test_single(n_thread, times, jar, test_file, project_dir, ignores=None, main
     p_list = []
     with ThreadPoolExecutor(n_thread) as executor:
         for i in range(times):
-            child = executor.submit(pat_thread, test_file, package + main, jar, True)
+            child = executor.submit(pat_thread, test_file, package + main, jar, False if times > 1 else True)
             p_list.append(child)
             # if pat(test_data_in, package + main, jar, timeout):
             #     pass_num += 1

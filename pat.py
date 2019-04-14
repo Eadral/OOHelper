@@ -15,7 +15,7 @@ def pat(test_data_in, class_path, jar, prt=False):
     # input = parseInput(inputfile)
     # print("@@@", input)
     start = time.time()
-    outputfile = callProgram(r"java -Xmx128m -cp {} {} {}".format(jar, class_path, test_data_in), inputfile)
+    outputfile = callProgram(r"java -Xmx128m -cp {} {}".format(jar, class_path), inputfile)
     end = time.time()
     passed_time = end - start
 
@@ -82,7 +82,7 @@ def callProgram(cmd, inputFile):
         #         print(write_str)
         p.stdin.write(write_str.encode("UTF-8"))
         p.stdin.flush()
-        time.sleep(0.01)
+        # time.sleep(0.01)
     w.start()
     p.stdin.close()
     try:
@@ -93,6 +93,7 @@ def callProgram(cmd, inputFile):
         p.terminate()
         print("\033[1;31mError: TimeoutExpired: May in the endless loop/wait. Check your 'synchronized'.")
         return output
+    # print(p.returncode)
     if p.returncode != 0:
         print("\033[1;31mError: return code {} is not 0\033[0m".format(p.returncode))
         return output
@@ -236,8 +237,18 @@ def check_1_4(input, output, eId):
         if not isOpen and (mesType == "IN" or mesType == "OUT"):
             return "The elevator is closed at {} while you want someone in/out： {}".format(i, [sequence[i-1], sequence[i], sequence[i+1]])
         if mesType == "OPEN":
+            if isOpen is True:
+                return "The elevator is open {} while you want it open again： {}".format(i, [sequence[i - 1],
+                                                                                                   sequence[i],
+                                                                                                   sequence[i + 1]])
+
             isOpen = True
         if mesType == "CLOSE":
+            if isOpen is False:
+                return "The elevator is closed at {} while you want it close again： {}".format(i, [sequence[i - 1],
+                                                                                                   sequence[i],
+                                                                                                   sequence[i + 1]])
+
             isOpen = False
     if isOpen == True:
         return "Elevator is not closed at the end."
