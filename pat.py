@@ -82,7 +82,7 @@ def callProgram(cmd, inputFile):
         #         print(write_str)
         p.stdin.write(write_str.encode("UTF-8"))
         p.stdin.flush()
-        # time.sleep(0.01)
+        time.sleep(0.01)
     w.start()
     p.stdin.close()
     try:
