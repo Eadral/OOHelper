@@ -54,7 +54,7 @@ def run(p, output):
         line = p.stdout.readline()
         if not line:
             break
-#         print(line)
+        # print(line)
         output.append(line.decode().strip())
 
 
@@ -343,8 +343,8 @@ def checkAll(inputfile, outputfile):
     outputSequenceB = parseOutput(sequenceB)
     outputSequenceC = parseOutput(sequenceC)
     r_A = checkAllSequence(input, outputSequenceA, "A")
-    r_B = checkAllSequence(input, outputSequenceB, "A")
-    r_C = checkAllSequence(input, outputSequenceC, "A")
+    r_B = checkAllSequence(input, outputSequenceB, "B")
+    r_C = checkAllSequence(input, outputSequenceC, "C")
     r_All = check_2(input, sequenceAll)
     if r_A is not True:
         return "Error Elevator A: " + str(r_A) + "\n\t" + str(outputfile)
