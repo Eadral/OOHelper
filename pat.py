@@ -21,8 +21,16 @@ def pat(test_data_in, class_path, jar, prt=False):
 
     # output = parseOutput(outputfile)
     if prt:
-        for line in outputfile:
-            print(line)
+        A, B, C = parseOutputABC(outputfile)
+        print("Elevator A:")
+        for line in A:
+            print("\033[1;34m{}\033[0m".format(line))
+        print("Elevator B:")
+        for line in B:
+            print("\033[1;35m{}\033[0m".format(line))
+        print("Elevator C:")
+        for line in C:
+            print("\033[1;36m{}\033[0m".format(line))
     # print(outputfile)
     ac = checkAll(inputfile, outputfile)
     t_ac = passed_time < maxtime
@@ -180,6 +188,8 @@ def check_1_2(intput, output, eId):
             while index < len(sequence) and sequence[index][0] != "CLOSE":
                 index += 1
             diff = cfg.DOOR_TIME
+            if index == len(sequence):
+                return "No Close with {}".format(sequence[i])
             if sequence[index][0] == "CLOSE":
                 diff = cfg.DOOR_TIME * 2
             if not (float(sequence[index][1][0]) - float(sequence[i][1][0]) >= diff) - cfg.EPS:
@@ -277,6 +287,27 @@ def check_3(input, output, eId):
             levelNow = level
     return True
 
+def check_4(input, output, eId):
+    sequence = output
+    inside = set()
+    for i, (mesType, mes) in enumerate(sequence):
+        if mesType == "IN":
+            inside.add(getId(sequence[i]))
+            maxN = 0
+            if eId == "A":
+                maxN = 6
+            if eId == "B":
+                maxN = 8
+            if eId == "C":
+                maxN = 7
+            if len(inside) > maxN:
+                return "Elevator is full at {}： {}".format(i, [sequence[-1], sequence[i], sequence[i + 1]])
+        if mesType == "OUT":
+            if getId(sequence[i]) not in inside:
+                return "{} not in elevator at {}： {}".format(getId(sequence[i]), i, [sequence[-1], sequence[i], sequence[i + 1]])
+            inside.remove(getId(sequence[i]))
+    return True
+
 def check_2(input, output):
     id_now = {}
     id_to = {}
@@ -319,6 +350,7 @@ def checkAllSequence(input, output, eId):
     r_1_2 = check_1_2(input, output, eId)
     r_1_3 = check_1_3(input, output, eId)
     r_1_4 = check_1_4(input, output, eId)
+    r_4 = check_4(input, output, eId)
 #     r_2 = check_2(input, output)
     r_3 = check_3(input, output, eId)
     if r_1_1 is not True:
@@ -329,6 +361,8 @@ def checkAllSequence(input, output, eId):
         return "check_1_3: \n\t" + str(r_1_3) + "\n\t" + str(output)
     if r_1_4 is not True:
         return "check_1_4: \n\t" + str(r_1_4) + "\n\t" + str(output)
+    if r_4 is not True:
+        return "check_4: \n\t" + str(r_4) + "\n\t" + str(output)
 #     if r_2 is not True:
 #         return "check_2: \n\t" + str(r_2) + "\n\t" + str(output)
     if r_3 is not True:

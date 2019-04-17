@@ -80,9 +80,7 @@ def test(n_thread, number, jar, test_data_folder, project_dir, ignores=None, mai
             #     pass_num += 1
             #     print("Passed: {}".format(test_data_in))
     wait(p_list)
-    for p in p_list:
-        if p.result() is not None:
-            print(p.result())
+
 
     # for p in p_list:
     #     print(p.done())
@@ -100,6 +98,11 @@ def test(n_thread, number, jar, test_data_folder, project_dir, ignores=None, mai
     print("\033[1;32mAverage Time: {}, Best Average Time: {}\033[0m".format(average_time, best_time))
     update_time(test_data_folder, average_time)
     conn.commit()
+
+    for p in p_list:
+        if p.result() is not None:
+            print(p.result())
+
 
 
 def pat_thread(test_data_in, class_path, jar, prt=False):
