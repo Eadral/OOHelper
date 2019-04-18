@@ -21,16 +21,18 @@ def pat(test_data_in, class_path, jar, prt=False):
 
     # output = parseOutput(outputfile)
     if prt:
-        A, B, C = parseOutputABC(outputfile)
-        print("Elevator A:")
-        for line in A:
-            print("\033[1;34m{}\033[0m".format(line))
-        print("Elevator B:")
-        for line in B:
-            print("\033[1;35m{}\033[0m".format(line))
-        print("Elevator C:")
-        for line in C:
-            print("\033[1;36m{}\033[0m".format(line))
+        for line in outputfile:
+            print(line)
+        # A, B, C = parseOutputABC(outputfile)
+        # print("Elevator A:")
+        # for line in A:
+        #     print("\033[1;34m{}\033[0m".format(line))
+        # print("Elevator B:")
+        # for line in B:
+        #     print("\033[1;35m{}\033[0m".format(line))
+        # print("Elevator C:")
+        # for line in C:
+        #     print("\033[1;36m{}\033[0m".format(line))
     # print(outputfile)
     ac = checkAll(inputfile, outputfile)
     t_ac = passed_time < maxtime
