@@ -39,14 +39,14 @@ def datacheck(test_data_in):
     # return int(basetime.group(1)), int(maxtime.group(1))
 
 
-def precompile(project_dir, main, main_path, jar):
-    if os.path.exists("temp"):
-        shutil.rmtree("temp")
-        os.mkdir("temp")
-    class_path = os.path.join("temp", "{}.class".format(main))
+def precompile(project_dir, main, main_path, jar, temp):
+    if os.path.exists(temp):
+        shutil.rmtree(temp)
+        os.mkdir(temp)
+    class_path = os.path.join(temp, "{}.class".format(main))
     if os.path.exists(class_path):
         os.remove(class_path)
-    output_path = os.path.join("temp", "output.txt")
+    output_path = os.path.join(temp, "output.txt")
     if os.path.exists(output_path):
         os.remove(output_path)
     src_path = os.path.join(project_dir, "src")
