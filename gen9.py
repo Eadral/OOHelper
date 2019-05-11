@@ -2,14 +2,14 @@ import random
 from copy import copy
 import os
 
-random_int_poll = [2147483647, -2147483648, 2147483646, -2147483647, -1, 0, 1]
-for i in range(240):
+random_int_poll = [2147483647, -2147483648, 2147483646, -2147483647, -1, 0, 1, -2, 2, 5]
+for i in range(110):
     random_int_poll.append(random.randint(-2147483648, 2147483647))
 
 global n
 n = 1
 ID_RANGE = n
-LENGTH = 200
+LENGTH = 80
 
 
 def get_id():
@@ -117,11 +117,11 @@ def shortest_path_length():
 
 
 def rnd(n):
-    return random.randint(1, n)
+    return random.randint(0, n)
 
 
-MAX_LINEAR = 500
-MAX_MOD = 20
+MAX_LINEAR = 1000
+MAX_MOD = 50
 
 global n_linear, n_mod
 n_linear = 0
