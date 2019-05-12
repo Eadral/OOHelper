@@ -116,6 +116,22 @@ def shortest_path_length():
     return "SHORTEST_PATH_LENGTH {} {}".format(get_node(), get_node())
 
 
+def connected_block_count():
+    return "CONNECTED_BLOCK_COUNT"
+
+
+def least_ticket_price():
+    return "LEAST_TICKET_PRICE {} {}".format(get_node(), get_node())
+
+
+def least_transfer_count():
+    return "LEAST_TRANSFER_COUNT {} {}".format(get_node(), get_node())
+
+
+def least_unpleasant_value():
+    return "LEAST_UNPLEASANT_VALUE {} {}".format(get_node(), get_node())
+
+
 def rnd(n):
     return random.randint(0, n)
 
@@ -132,9 +148,9 @@ if __name__ == "__main__":
 
     test = []
     cmd_list = []
-    cmd_list += rnd(4) * [path_add]
+    cmd_list += rnd(6) * [path_add]
     cmd_list += rnd(1) * [path_remove]
-    cmd_list += rnd(3) * [path_remove_by_id]
+    cmd_list += rnd(1) * [path_remove_by_id]
     cmd_list += rnd(1) * [path_get_id]
     cmd_list += rnd(1) * [path_get_by_id]
     cmd_list += rnd(1) * [path_count]
@@ -143,17 +159,22 @@ if __name__ == "__main__":
     cmd_list += rnd(1) * [contains_path]
     cmd_list += rnd(1) * [contains_path_id]
     cmd_list += rnd(10) * [distinct_node_count]
-    cmd_list += rnd(10) * [compare_paths]
+    cmd_list += rnd(1) * [compare_paths]
     cmd_list += rnd(1) * [path_contains_node]
     cmd_list += rnd(1) * [contains_node]
     cmd_list += rnd(1) * [contains_edge]
-    cmd_list += rnd(10) * [is_node_connected]
-    cmd_list += rnd(10) * [shortest_path_length]
+    cmd_list += rnd(30) * [is_node_connected]
+    cmd_list += rnd(30) * [shortest_path_length]
+    cmd_list += rnd(30) * [connected_block_count]
+    cmd_list += rnd(30) * [least_ticket_price]
+    cmd_list += rnd(30) * [least_transfer_count]
+    cmd_list += rnd(30) * [least_unpleasant_value]
 
-    for i in range(7000):
+    for i in range(8000):
         pick = cmd_list[random.randint(0, len(cmd_list) - 1)]
 
-        linear_cmd = [path_add, path_remove, path_remove_by_id, path_get_id, path_get_by_id, contains_path, compare_paths]
+        linear_cmd = [path_add, path_remove, path_remove_by_id, path_get_id, path_get_by_id, contains_path,
+                      compare_paths]
         if pick in linear_cmd:
             n_linear += 1
             if n_linear >= MAX_LINEAR:
