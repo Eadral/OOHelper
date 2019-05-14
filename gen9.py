@@ -137,7 +137,7 @@ def rnd(n):
 
 
 MAX_LINEAR = 1000
-MAX_MOD = 50
+MAX_MOD = 70
 
 global n_linear, n_mod
 n_linear = 0
@@ -170,7 +170,7 @@ if __name__ == "__main__":
     cmd_list += rnd(30) * [least_transfer_count]
     cmd_list += rnd(30) * [least_unpleasant_value]
 
-    for i in range(8000):
+    for i in range(10000):
         pick = cmd_list[random.randint(0, len(cmd_list) - 1)]
 
         linear_cmd = [path_add, path_remove, path_remove_by_id, path_get_id, path_get_by_id, contains_path,
